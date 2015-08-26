@@ -1,0 +1,83 @@
+<resources>
+    <string name="app_name">GladToHear</string>
+
+    <string name="help_chek">帮你算</string>
+    <string name="next_step">下一步</string>
+    <string name="ok">确定</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="Market_name">
+        <item>农工商</item>
+        <item>乐购</item>
+        <item>家乐福</item>
+    </string-array>
+    <string-array name="Catalogs">
+        <item>食品饮料</item>
+        <item>日用家化</item>
+        <item>母婴亲子</item>
+        <item>食品生鲜</item>
+        <item>美容护理</item>
+        <item>厨卫清洁</item>
+        <item>母婴玩具</item>
+    </string-array>
+    <!--食品饮料-->
+    <string-array name="food_drink_catalog">
+        <item>冷饮</item>
+        <item>乳品</item>
+        <item>调料</item>
+        <item>膨化食品</item>
+        <item>酒</item>
+        <item>麦片</item>
+        <item>罐头</item>
+        <item>腌制品</item>
+        <item>食用油</item>
+        <item>饼干</item>
+    </string-array>
+    <!--日用家化-->
+    <string-array name="daily_necessities_catalog">
+        <item>洗发护发</item>
+        <item>洗衣用品</item>
+        <item>蚊香</item>
+        <item>纸巾</item>
+        <item>口腔护理</item>
+        <item>卫生棉</item>
+    </string-array>
+    <!--母婴亲子-->
+    <string-array name="mami_baby_catalog">
+        <item>奶粉</item>
+        <item>沐浴护肤</item>
+        <item>尿片</item>
+    </string-array>
+    <!--食品生鲜-->
+    <string-array name="fresh_food_catalog">
+        <item>调味料</item>
+        <item>麦片</item>
+        <item>饮料</item>
+        <item>饼干</item>
+    </string-array>
+    <!--美容护理-->
+    <string-array name="aesthetic_nursing_catalog">
+        <item>洗发露</item>
+        <item>沐浴乳</item>
+        <item>肥皂</item>
+        <item>香皂</item>
+        <item>护发素</item>
+    </string-array>
+    <!--厨卫清洁-->
+    <string-array name="washing_nursing_catalog">
+        <item>洁厕宝</item>
+        <item>洗洁精</item>
+    </string-array>
+    <!--母婴玩具-->
+    <string-array name="baby_toys_catalog">
+        <item>拖拉机</item>
+        <item>飞机</item>
+        <item>挖掘机</item>
+    </string-array>
+    <string name="title_activity_market_sel">MarketSelActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="curten">下一步</string>
+    <string name="title_activity_catlogs_sel">CatlogsSelActivity</string>
+    <string name="title_activity_detail_catlogs">DetailCatlogsActivity</string>
+    <string name="title_activity_products_list">ProductsListActivity</string>
+</resources>
