@@ -1,17 +1,61 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <include layout="@layout/toolbar_main"></include>
+    <com.yieryi.gladtohear.overridge.MyScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="@dimen/five_dip"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_function_recyc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
-    <TextView
-        android:id="@+id/help"
-        android:textColor="@color/material_deep_teal_200"
-        android:text="@string/help_chek"
-        android:layout_width="wrap_content"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_centerInParent="true"
-        android:background="#5A4CAE"
-        android:layout_height="wrap_content" />
+            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/brand_dynamic_rounded_rectangle"
+                android:text="品牌动态"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/test"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/test"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/test"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <FrameLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+            </FrameLayout>
+        </LinearLayout>
+
+    </com.yieryi.gladtohear.overridge.MyScrollView>
 </RelativeLayout>

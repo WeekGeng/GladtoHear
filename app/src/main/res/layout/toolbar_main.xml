@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:layout_height="48dp"
+    android:layout_width="match_parent"
+    android:background="#ACf50000"
+    style="@style/AppTheme"
+    android:gravity="center"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingRight="10dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/main_local_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="上海市"
+            android:textSize="@dimen/sixteen_sp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:drawablePadding="5dp"
+            />
+        <EditText
+            android:id="@+id/ed_search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:lines="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:padding="5dp"
+            android:background="@drawable/cicle_back_search"
+            android:drawableLeft="@drawable/abc_ic_search_api_mtrl_alpha"
+            android:drawableRight="@drawable/abc_ic_clear_mtrl_alpha"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/person"
+            android:layout_gravity="center_vertical"
+            />
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>
