@@ -5,4 +5,5 @@
     <color name="text_black_color">#000</color>
 
     <color name="text_half_black_color">#a000</color>
+    <color name="text_little_black_color">#5000</color>
 </resources>
