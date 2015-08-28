@@ -26,6 +26,7 @@ public class ProductsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_products_list);
         initView();
         initToolbar();
+
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
         badgeView.setTargetView(shopping_car_tv);
