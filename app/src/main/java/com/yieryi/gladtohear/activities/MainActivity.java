@@ -24,10 +24,14 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     private RecyclerView main_function_recyc;
     private FunctionAdapter adapter;
     private GridLayoutManager gridLayoutManager;
+    private TextView main_local_tv;
+    private String provience;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        provience=intent.getStringExtra("provience");
         getDataFunction();
         initView();
         setListeners();
@@ -77,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
      * 初始化界面
      */
     private void initView() {
+
+        main_local_tv=(TextView)findViewById(R.id.main_local_tv);
+        main_local_tv.setText(provience);
+
         main_function_recyc= (RecyclerView) findViewById(R.id.main_function_recyc);
         adapter=new FunctionAdapter(functionItems,this);
         gridLayoutManager=new MyGridLayoutManager(this,3);

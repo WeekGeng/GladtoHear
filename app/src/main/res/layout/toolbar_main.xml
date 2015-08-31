@@ -33,6 +33,7 @@
             android:layout_marginRight="10dp"
             android:ellipsize="end"
             android:padding="5dp"
+
             android:background="@drawable/cicle_back_search"
             android:drawableLeft="@drawable/abc_ic_search_api_mtrl_alpha"
             android:drawableRight="@drawable/abc_ic_clear_mtrl_alpha"
