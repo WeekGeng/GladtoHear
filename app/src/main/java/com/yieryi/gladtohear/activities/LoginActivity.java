@@ -1,7 +1,10 @@
 package com.yieryi.gladtohear.activities;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,12 +38,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Map<String,String> paramas=new HashMap<>();
 
     String phone_number,password;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
         setListeners();
+        initToolBar();
+    }
+
+    private void initToolBar() {
+            toolbar = (Toolbar)findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setTitle("登录");
+            toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setListeners() {
@@ -61,6 +76,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_tv_qq=(TextView)findViewById(R.id.login_tv_qq);
         login_tv_weixin=(TextView)findViewById(R.id.login_tv_weixin);
         login_tv_sina=(TextView)findViewById(R.id.login_tv_sina);
+        login_tv_forget_pass.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        login_tv_regist.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
     @Override

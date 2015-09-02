@@ -19,7 +19,7 @@
         android:textColor="@color/text_half_black_color"
         android:background="@drawable/cicle_back_login"
         android:padding="10dp"
-        android:textColorHint="@color/text_half_black_color"
+        android:textColorHint="@color/text_little_black_color"
         />
     <EditText
         android:layout_width="match_parent"
@@ -28,10 +28,11 @@
         android:padding="10dp"
         android:textColor="@color/text_half_black_color"
         android:layout_margin="10dp"
+        android:inputType="textPassword"
         android:background="@drawable/cicle_back_login"
         android:layout_marginTop="10dp"
         android:id="@+id/login_ed_pass"
-        android:textColorHint="@color/text_half_black_color"
+        android:textColorHint="@color/text_little_black_color"
         />
     <TextView
         android:id="@+id/login_tv_login"
@@ -55,18 +56,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:textSize="@dimen/sixteen_dip"
             android:textColor="@color/text_black_color"
-            android:text="忘记密码"
+            android:text="忘记密码 ?"
             />
         <TextView
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:background="@color/text_black_color"
+            android:layout_margin="10dp"
+            android:background="@color/text_half_black_color"
             />
         <TextView
             android:id="@+id/login_tv_regist"
             android:layout_width="wrap_content"
+            android:textSize="@dimen/sixteen_dip"
             android:textColor="@color/text_black_color"
             android:layout_height="wrap_content"
             android:padding="10dp"

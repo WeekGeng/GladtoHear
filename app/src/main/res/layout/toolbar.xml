@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="#af00"
     style="@style/AppTheme"
-    android:gravity="center"
+    android:gravity="center_vertical"
     >
 
 </android.support.v7.widget.Toolbar>
