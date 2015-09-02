@@ -6,11 +6,11 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="22" />
 
-    <!--<permission-->
-        <!--android:name="com.mb.mmdepartment.permission.JPUSH_MESSAGE"-->
-        <!--android:protectionLevel="signature" />-->
+    <!-- <permission -->
+    <!-- android:name="com.mb.mmdepartment.permission.JPUSH_MESSAGE" -->
+    <!-- android:protectionLevel="signature" /> -->
     <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <!--<uses-permission android:name="com.mb.mmdepartment.permission.JPUSH_MESSAGE" />-->
+    <!-- <uses-permission android:name="com.mb.mmdepartment.permission.JPUSH_MESSAGE" /> -->
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -24,7 +24,6 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -48,7 +47,6 @@
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name" >
-
         </activity>
         <activity
             android:name=".activities.MarketSelActivity"
@@ -69,6 +67,15 @@
         <activity
             android:name=".activities.WelActivity"
             android:label="@string/title_activity_wel" >
+
+        </activity>
+        <activity
+            android:name=".activities.UserCenterActivity"
+            android:label="@string/title_activity_user_center" >
+        </activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

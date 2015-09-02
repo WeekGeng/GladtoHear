@@ -81,4 +81,6 @@
     <string name="title_activity_detail_catlogs">DetailCatlogsActivity</string>
     <string name="title_activity_products_list">ProductsListActivity</string>
     <string name="title_activity_wel">WelActivity</string>
+    <string name="title_activity_user_center">UserCenterActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

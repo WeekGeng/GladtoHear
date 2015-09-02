@@ -16,6 +16,8 @@ public class TApplication extends Application{
     //高德地图定位
     private static String spName="yiErYi_gaoDe_local";
     private static SharedPreferences.Editor edit;
+
+    public static String token="";
     @Override
     public void onCreate() {
         super.onCreate();

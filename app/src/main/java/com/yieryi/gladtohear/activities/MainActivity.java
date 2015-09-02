@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yieryi.gladtohear.R;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     private GridLayoutManager gridLayoutManager;
     private TextView main_local_tv;
     private String provience;
+    private ImageView user_center;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +76,13 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
      * 设置监听器
      */
     private void setListeners() {
-
+        user_center.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,UserCenterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
 
         main_local_tv=(TextView)findViewById(R.id.main_local_tv);
         main_local_tv.setText(provience);
-
+        user_center=(ImageView)findViewById(R.id.user_center);
         main_function_recyc= (RecyclerView) findViewById(R.id.main_function_recyc);
         adapter=new FunctionAdapter(functionItems,this);
         gridLayoutManager=new MyGridLayoutManager(this,3);
