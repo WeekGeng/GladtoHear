@@ -1,11 +1,15 @@
 package com.yieryi.gladtohear.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -15,11 +19,19 @@ import android.widget.Toast;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.constans.BaseConsts;
 import com.yieryi.gladtohear.constans.LoginConsts;
 import com.yieryi.gladtohear.network.OkHttp;
 import com.yieryi.gladtohear.tools.MD5Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,6 +51,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     String phone_number,password;
     private Toolbar toolbar;
+    private final String TAG=LoginActivity.class.getSimpleName();
+
+    private Tencent mTencent ;
+    private String type;
+    private String token,openId,expires;
+    private String username;
+    private MyIUListener listener;
+    private Handler handlerInstance=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            handleLogin(openId,username);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +76,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initToolBar() {
-            toolbar = (Toolbar)findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("登录");
-            toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("登录");
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setListeners() {
@@ -78,6 +104,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login_tv_sina=(TextView)findViewById(R.id.login_tv_sina);
         login_tv_forget_pass.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         login_tv_regist.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        mTencent = Tencent.createInstance(LoginConsts.Account.QQLogin.QQ_APP_KEY, this);
+        listener=new MyIUListener();
     }
 
     @Override
@@ -154,7 +182,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
             case R.id.login_tv_qq:
-
+                mTencent.login(this, "all",listener);
                 break;
             case R.id.login_tv_weixin:
 
@@ -163,6 +191,74 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 break;
         }
+    }
+
+    /**
+     * 登录监听接口
+     */
+    class MyIUListener implements IUiListener {
+
+        JSONObject json;
+        @Override
+        public void onComplete(Object o) {
+            if (null == o) {
+                Toast.makeText(LoginActivity.this, "登录失败", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            try {
+                json=new JSONObject(o.toString());
+                openId = ((JSONObject) o).getString("openid");
+                token = json.getString(Constants.PARAM_ACCESS_TOKEN);
+                Log.e("login_info",token);
+                expires = json.getString(Constants.PARAM_EXPIRES_IN);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(expires)
+                    && !TextUtils.isEmpty(openId)) {
+                mTencent.setAccessToken(token, expires);
+                mTencent.setOpenId(openId);
+            }
+            UserInfo info = new UserInfo(LoginActivity.this, mTencent.getQQToken());
+            info.getUserInfo(new IUiListener() {
+                @Override
+                public void onError(UiError o) {
+                    Toast.makeText(LoginActivity.this, "获取用户信息失败：" + o.errorDetail, Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onComplete(Object o) {
+                    try {
+                        username = new JSONObject(o.toString()).getString("nickname");
+                        Message msg = new Message();
+                        msg.what = 0;
+                        msg.obj = type;
+                        handlerInstance.sendMessage(msg);
+                        Toast.makeText(LoginActivity.this,"username"+username,Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onCancel() {
+                    Toast.makeText(LoginActivity.this, "授权取消",  Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        @Override
+        public void onError(UiError o) {
+            Toast.makeText(LoginActivity.this, "授权错误：" + o.errorDetail, Toast.LENGTH_SHORT).show();
+        }
+        @Override
+        public void onCancel() {
+            Toast.makeText(LoginActivity.this, "授权取消",  Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Tencent.onActivityResultData(requestCode, resultCode, data,new MyIUListener());
     }
 
     /**
@@ -198,5 +294,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Pattern pattern = Pattern.compile(match);
         Matcher matcher = pattern.matcher(phone);
         return matcher.matches();
+    }
+    /**
+     * 第三方平台登录
+     *
+     * @param uid
+     * @param userName
+     */
+    private void handleLogin(String uid, String userName) {
+        Map<String, String> params = new HashMap<>();
+        params.put("openId", uid);
+        params.put("nick", userName);
+        OkHttp.asyncPost(BaseConsts.BASE_URL, params, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+            @Override
+            public void onResponse(final Response response) throws IOException {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (response.isSuccessful()){
+                            Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                });
+            }
+        });
     }
 }

@@ -98,11 +98,18 @@
     <orderEntry type="library" exported="" name="recyclerview-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="okhttp-2.5.0" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_Sina" level="project" />
+    <orderEntry type="library" exported="" name="umeng_social_sdk" level="project" />
     <orderEntry type="library" exported="" name="mta-sdk-1.6.2" level="project" />
     <orderEntry type="library" exported="" name="kxml2-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="badgeview" level="project" />
     <orderEntry type="library" exported="" name="open_sdk_r5276" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_WeiXin_1" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_QQZone_1" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_WeiXin_2" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_QQZone_2" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_QQZone_3" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="MapApiLocation_1.3.3" level="project" />
     <orderEntry type="module" module-name="shape-imageview-lib" exported="" />

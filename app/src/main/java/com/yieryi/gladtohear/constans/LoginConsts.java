@@ -94,6 +94,16 @@ public class LoginConsts {
         }
 
         /**
+         * 第三方QQ登录
+         */
+        public final class QQLogin {
+//            public static final String QQ_APP_KEY = "1104765835";
+            public static final String QQ_APP_KEY = "1104765835";
+
+            public static final String QQ_APPSECRET = "tc4jiqzbzzXfiFIM";
+            public static final String DESCRIPTOR = "com.yieryi.gladtohear";
+        }
+        /**
          *
          * @ClassName: MyDetilUpdate
          * @Description: 修改个人信息
