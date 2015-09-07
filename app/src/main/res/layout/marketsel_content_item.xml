@@ -21,13 +21,9 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/market_unsel"
             />
-        <com.github.siyamed.shapeimageview.RoundedImageView
+        <ImageView
             android:layout_width="60dp"
             android:src="@mipmap/test"
-            app:siBorderAlpha="0.8"
-            app:siBorderWidth="0.5dp"
-            app:siRadius="8dp"
-            app:siBorderColor="#fff"
             android:layout_marginLeft="@dimen/ten_dip"
             android:layout_height="60dp" />
         <LinearLayout

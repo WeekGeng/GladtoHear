@@ -30,4 +30,21 @@ public class BaseConsts {
      * 用户模块 密码
      */
     public static final String password = "password";
+
+    public static final class SharePreference {
+        private SharePreference() {
+
+        }
+        public static final String SCREEN_WIDTH = "screen_width";
+        public static final String SCREEN_HEIGHT = "screen_height";
+        public static final String IS_FIRST_INTO = "is_first_into";
+        public static final String USER_TOKEN = "user_token";
+        public static final String RONG_TOKEN = "rong_token";
+        public static final String USER_AUTHORITY = "user_authority";
+        public static final String USER_EREDAR = "user_eredar";
+        public static final String USER_USERSTATUS = "user_userstatus";
+
+    }
+    //程序退出广播的action
+    public static final String INTENT_ACTION_EXIT_APP = "com.yieryi.gladtohear.broadcast.exit";
 }

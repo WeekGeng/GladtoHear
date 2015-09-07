@@ -6,4 +6,5 @@
 
     <color name="text_half_black_color">#a000</color>
     <color name="text_little_black_color">#5000</color>
+    <color name="transparent_black">#50000000</color>
 </resources>
