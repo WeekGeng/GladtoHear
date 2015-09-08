@@ -1,12 +1,11 @@
 package com.yieryi.gladtohear.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,6 +24,7 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.yieryi.gladtohear.R;
+import com.yieryi.gladtohear.base.BaseActivity;
 import com.yieryi.gladtohear.constans.BaseConsts;
 import com.yieryi.gladtohear.constans.LoginConsts;
 import com.yieryi.gladtohear.network.OkHttp;
@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener{
     //输入框
     private EditText login_ed_phone,login_ed_pass;
     //登录 注册 忘记密码
@@ -65,25 +65,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             handleLogin(openId,username);
         }
     };
+    @Override
+    public int getLayout() {
+        return R.layout.activity_login;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    public void init(Bundle savedInstanceState) {
         initView();
         setListeners();
-        initToolBar();
     }
 
-    private void initToolBar() {
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("登录");
-        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    @Override
+    protected void setToolBar(ActionBar action,boolean isTrue) {
+        action.setTitle("登录");
+        action.setHomeButtonEnabled(isTrue);
     }
-
     private void setListeners() {
         login_tv_login.setOnClickListener(this);
         login_tv_forget_pass.setOnClickListener(this);

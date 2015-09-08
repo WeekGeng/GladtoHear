@@ -7,7 +7,7 @@
     <com.yieryi.gladtohear.overridge.MyScrollView
         android:layout_width="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="@dimen/five_dip"
+        android:layout_marginTop="@dimen/two_dip"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,15 +37,21 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:src="@mipmap/test"
+                    android:scaleType="fitXY"
+                    android:layout_margin="2dp"
                     android:layout_height="wrap_content" />
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:scaleType="fitXY"
                     android:src="@mipmap/test"
+                    android:layout_margin="2dp"
                     android:layout_height="wrap_content" />
                 <ImageView
                     android:layout_width="0dp"
+                    android:scaleType="fitXY"
                     android:layout_weight="1"
+                    android:layout_margin="2dp"
                     android:src="@mipmap/test"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -56,6 +62,5 @@
 
             </FrameLayout>
         </LinearLayout>
-
     </com.yieryi.gladtohear.overridge.MyScrollView>
 </RelativeLayout>

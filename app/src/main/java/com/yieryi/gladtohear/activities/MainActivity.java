@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +20,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FunctionAdapter.OnItemClickListener{
     //帮你算按钮
-    private TextView help;
     private List<FunctionItem> functionItems;
     private FunctionItem item;
     private RecyclerView main_function_recyc;
@@ -31,14 +31,14 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView( R.layout.activity_main);
         Intent intent = getIntent();
+        Log.e("intent",intent.toString());
         provience=intent.getStringExtra("provience");
         getDataFunction();
         initView();
         setListeners();
     }
-
     private void getDataFunction() {
         functionItems=new ArrayList<>();
         item=new FunctionItem();
@@ -76,13 +76,15 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
      * 设置监听器
      */
     private void setListeners() {
+
         user_center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,UserCenterActivity.class);
+                Intent intent = new Intent(MainActivity.this, UserCenterActivity.class);
                 startActivity(intent);
             }
         });
+
     }
 
     /**
@@ -106,10 +108,12 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     public void onClick(View view, int position) {
         switch (position){
             case 0:
-                Intent intent=new Intent(MainActivity.this,MarketSelActivity.class);
-                startActivity(intent);
+                Intent intent1=new Intent(MainActivity.this,MarketSelActivity.class);
+                startActivity(intent1);
                 break;
             case 1:
+                Intent intent2=new Intent(MainActivity.this,HelpCheckActivity.class);
+                startActivity(intent2);
                 break;
             case 2:
                 break;

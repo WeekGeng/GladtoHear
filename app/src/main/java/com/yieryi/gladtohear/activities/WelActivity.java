@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,10 +13,11 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.LocationManagerProxy;
 import com.amap.api.location.LocationProviderProxy;
 import com.yieryi.gladtohear.R;
+import com.yieryi.gladtohear.base.BaseActivity;
 import com.yieryi.gladtohear.tools.AmapLocationUtils;
 import com.yieryi.gladtohear.tools.OnLocalListener;
 
-public class WelActivity extends AppCompatActivity implements OnLocalListener{
+public class WelActivity extends BaseActivity implements OnLocalListener{
     private TextView tv_location;
     private LocationManagerProxy mLocationManagerProxy;
     private AmapLocationUtils amaplocation;
@@ -25,16 +26,25 @@ public class WelActivity extends AppCompatActivity implements OnLocalListener{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            startActivity(WelActivity.this, MainActivity.class,provience,"provience");
+            startActivity(WelActivity.this, MainActivity.class,"provience",provience);
+            finish();
         }
     };
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wel);
+    public int getLayout() {
+        return R.layout.activity_wel;
+    }
+
+    @Override
+    public void init(Bundle savedInstanceState) {
         initView();
     }
 
+    @Override
+    protected void setToolBar(ActionBar action,boolean isTrue) {
+        action.setTitle("切换城市");
+        action.setHomeButtonEnabled(isTrue);
+    }
     /**
      * 初始化view
      */

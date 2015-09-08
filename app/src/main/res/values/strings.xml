@@ -83,4 +83,8 @@
     <string name="title_activity_wel">WelActivity</string>
     <string name="title_activity_user_center">UserCenterActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_giude">GiudeActivity</string>
+    <string name="title_activity_help_check">HelpCheckActivity</string>
+    <string name="title_activity_market_adress">MarketAdressActivity</string>
 </resources>

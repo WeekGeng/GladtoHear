@@ -1,7 +1,10 @@
 package com.yieryi.gladtohear.base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,10 +28,10 @@ import com.yieryi.gladtohear.tools.log.Log;
 /**
  * 基类的activity.
  */
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener,ToastControl,DialogControl{
+public abstract class BaseActivity extends AppCompatActivity implements ToastControl,DialogControl{
     public final String TAG=BaseActivity.class.getSimpleName();
     private ActionBar actionBar;
-    private PushAgent mPushAgent;
+    public PushAgent mPushAgent;
     private ExitBroadCast exitBroadCast;
     private static String lastToast=null;
     private static long lastToastTime=0;
@@ -39,9 +42,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         initParameters();
-        initToolBar();
         initExit();
         init(savedInstanceState);
+        initToolBar();
     }
     public ActionBar getCustomBar() {
         return actionBar != null ? actionBar : null;
@@ -74,6 +77,66 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         mPushAgent=PushAgent.getInstance(this);
         mPushAgent.onAppStart();
     }
+
+    /**
+     * 不带参数的跳转
+     * @param activity
+     * @param clas
+     */
+    public void startActivity(Activity activity,Class clas){
+        Intent intent=new Intent(activity,clas);
+        startActivity(intent);
+    }
+
+    /**
+     * intent带参数的跳转
+     * @param activity
+     * @param clas
+     */
+    public void startActivity(Activity activity,Class clas,String key,String extras){
+        Intent intent=new Intent(activity,clas);
+        intent.putExtra(key,extras);
+        startActivity(intent);
+    }
+    /**
+     * intent带多个参数的跳转
+     * @param activity
+     * @param clas
+     */
+    public void startActivity(Activity activity,Class clas,String[] keys,String[] extras){
+        Intent intent=new Intent(activity,clas);
+        for (int i=0;i<keys.length;i++){
+            intent.putExtra(keys[i],extras[i]);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * 带有bundle的跳转
+     * @param activity
+     * @param bundle
+     * @param key
+     * @param clas
+     */
+    public void startActivity(Activity activity,Bundle bundle,String key,Class clas){
+        Intent intent=new Intent(activity,clas);
+        intent.putExtra(key,bundle);
+        startActivity(intent);
+    }
+
+    /**
+     * 实现parcelable接口的参数
+     * @param activity
+     * @param parcelable
+     * @param key
+     * @param clas
+     */
+    public void startActivity(Activity activity,Parcelable parcelable,String key,Class clas){
+        Intent intent=new Intent(activity,clas);
+        intent.putExtra(key,parcelable);
+        startActivity(intent);
+    }
+
     /**
      * 初始化toolbar
      */
@@ -83,18 +146,15 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             setSupportActionBar(toolbar);
             actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setHomeButtonEnabled(true); //设置返回键可用
                 actionBar.setDisplayHomeAsUpEnabled(true);
                 actionBar.setDisplayShowTitleEnabled(true);
+                setToolBar(actionBar,true);
             }
         } catch (NullPointerException e) {
             Log.i("Toolbar", "toolbar = null");
         }
     }
-    @Override
-    public void onClick(View view) {
-
-    }
+    protected abstract void setToolBar(ActionBar action,boolean isTrue);
     public void showToast(int message) {
         showToast(message, Toast.LENGTH_LONG, 0);
     }
