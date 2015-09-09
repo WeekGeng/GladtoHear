@@ -87,4 +87,5 @@
     <string name="title_activity_giude">GiudeActivity</string>
     <string name="title_activity_help_check">HelpCheckActivity</string>
     <string name="title_activity_market_adress">MarketAdressActivity</string>
+    <string name="content">帮你算中所有促销信息和商品价格都是来自各商超官网公布的及时海报，任何疑问请与商超现场服务人员洽谈！</string>
 </resources>

@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#42A5F5</color>
     <color name="colorAccent">#1E88E5</color>
 
+    <color name="dialog_color_sle">#2f00</color>
+    <color name="dialog_color_unsle">#2000</color>
 
     //自定义WaitDialog
     <color name="color_wait_dialog_txt">#FF4B4B4B</color>

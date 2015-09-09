@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.gladtohear.view.DetailCatlogsActivity">
-    <include layout="@layout/toolbar" android:layout_alignParentTop="true"></include>
+    <include layout="@layout/toolbar"></include>
     <com.yieryi.gladtohear.view.AnimatedExpandableListView
         android:id="@+id/detail_expandle_lv"
         android:layout_above="@+id/detail_tv_next"

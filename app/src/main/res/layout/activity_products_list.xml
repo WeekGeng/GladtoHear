@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.gladtohear.view.ProductsListActivity">
-    <include layout="@layout/toolbar" android:layout_alignParentTop="true"></include>
+    <include layout="@layout/toolbar"></include>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_market"
         android:layout_width="match_parent"
@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:id="@+id/shopping_car_linear"
         android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_weight="1"
@@ -29,7 +30,7 @@
                 android:textColor="#000"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
-                android:drawableTop="@mipmap/ic_launcher"
+                android:drawableTop="@mipmap/shopping"
                 />
         </RelativeLayout>
         <RelativeLayout
@@ -44,7 +45,6 @@
                 android:padding="5dp"
                 android:layout_centerVertical="true"
                 android:textColor="#fff"
-                android:layout_toRightOf="@id/shopping_car_tv"
                 android:text="此次共节省："
                 android:background="#f00"
                 />

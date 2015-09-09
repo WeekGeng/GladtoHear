@@ -1,5 +1,6 @@
 package com.yieryi.gladtohear.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -108,8 +112,40 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     public void onClick(View view, int position) {
         switch (position){
             case 0:
-                Intent intent1=new Intent(MainActivity.this,MarketSelActivity.class);
-                startActivity(intent1);
+                final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.show();
+                dialog.setCancelable(false);
+                Window window = dialog.getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+                window.setContentView(R.layout.activity_prompt);
+                window.findViewById(R.id.title).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                final TextView dialog_next=(TextView)window.findViewById(R.id.dialog_next);
+                final CheckBox checkbox= (CheckBox) window.findViewById(R.id.checkbox);
+                checkbox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (checkbox.isChecked()) {
+                            dialog_next.setClickable(true);
+                            dialog_next.setBackgroundColor(getResources().getColor(R.color.dialog_color_sle));
+                        }else {
+                            dialog_next.setClickable(false);
+                            dialog_next.setBackgroundColor(getResources().getColor(R.color.dialog_color_unsle));
+                        }
+                    }
+                });
+                window.findViewById(R.id.dialog_next).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(MainActivity.this,MarketSelActivity.class);
+                        startActivity(intent);
+                    }
+                });
                 break;
             case 1:
                 Intent intent2=new Intent(MainActivity.this,HelpCheckActivity.class);
