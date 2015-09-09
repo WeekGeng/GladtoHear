@@ -1,89 +1,200 @@
 package com.yieryi.gladtohear.activities;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.google.gson.Gson;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.adapter.HelpCheckAdapter;
 import com.yieryi.gladtohear.base.BaseActivity;
+import com.yieryi.gladtohear.bean.market_address.Description;
+import com.yieryi.gladtohear.bean.market_address.Root;
+import com.yieryi.gladtohear.constans.BaseConsts;
+import com.yieryi.gladtohear.constans.CatlogConsts;
 import com.yieryi.gladtohear.listener.OnRecycItemClickListener;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.yieryi.gladtohear.network.OkHttp;
+
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickListener{
     private RecyclerView recyclerView;
     private HelpCheckAdapter adapter;
-    private List<Map<String,String>> list;
-    private Map<String,String> map;
     @Override
     public int getLayout() {
         return R.layout.activity_help_check;
     }
     @Override
     public void init(Bundle savedInstanceState) {
-        initData();
+//        initData();
         initView();
+
+        getMarcket();
     }
-    /**
-     * 此处数据网络请求得来 用实体类
-     */
-    private void initData() {
-        list=new ArrayList<>();
-        map=new HashMap<>();
-        map.put("icon", "http://192.168.100.102:8080/images/darunfa.jpg");
-        map.put("name", "大润发超市");
-        list.add(map);
 
-        map=new HashMap<>();
-        map.put("icon", "http://192.168.100.102:8080/images/jialefu.jpg");
-        map.put("name", "家乐福超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon", "http://192.168.100.102:8080/images/shijihualian.jpg");
-        map.put("name", "世纪华联超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon", "http://192.168.100.102:8080/images/a.png");
-        map.put("name", "乐购超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon","http://192.168.100.102:8080/images/b.png");
-        map.put("name", "欧尚超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon","http://192.168.100.102:8080/images/c.png");
-        map.put("name", "沃尔玛超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon","http://192.168.100.102:8080/images/d.png");
-        map.put("name", "易买得超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon","http://192.168.100.102:8080/images/e.png");
-        map.put("name", "全家超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon","http://192.168.100.102:8080/images/f.png");
-        map.put("name", "全家超市");
-        list.add(map);
-        map=new HashMap<>();
-        map.put("icon","http://192.168.100.102:8080/images/g.png");
-        map.put("name", "全家超市");
-        list.add(map);
-        map.put("icon","http://192.168.100.102:8080/images/h.png");
-        map.put("name", "全家超市");
-        list.add(map);
+    private void getMarcket() {
+        paremas.put(BaseConsts.APP, CatlogConsts.GetMarket.params_app);
+        paremas.put(BaseConsts.CLASS, CatlogConsts.GetMarket.params_class);
+        paremas.put(BaseConsts.SIGN, CatlogConsts.GetMarket.params_sign);
+        paremas.put("parent_id",String.valueOf(0));
+        OkHttp.asyncPost(BaseConsts.BASE_URL, paremas, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                showToast("请检查网络情况");
+            }
+            @Override
+            public void onResponse(final Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Gson gson = new Gson();
+                    try {
+                        String json = response.body().string();
+                        json = json.replace(" ", "");
 
+                        String jsons="{\n" +
+                                "  status : 0,\n" +
+                                "  error : \"\",\n" +
+                                "  data : \n" +
+                                "  {\n" +
+                                "    list : \n" +
+                                "    [\n" +
+                                "      {\n" +
+                                "        shop_id : \"8\",\n" +
+                                "        shop_name : \"农工商\",\n" +
+                                "        shop_logo : null,\n" +
+                                "        initial : null,\n" +
+                                "        city : \"0\",\n" +
+                                "        parent_id : \"0\",\n" +
+                                "        hid : \"0:0008\",\n" +
+                                "        shop_name2 : null,\n" +
+                                "        addres : \"\",\n" +
+                                "        route : \"\",\n" +
+                                "        business_hours : \"\",\n" +
+                                "        phone : \"\",\n" +
+                                "        baidu_jing : \"\",\n" +
+                                "        baidu_wei : \"\",\n" +
+                                "        gaode_jing : \"\",\n" +
+                                "        gaode_wei : \"\",\n" +
+                                "        ctime : \"2015-09-06 11:23:48\"\n" +
+                                "      },\n" +
+                                "      {\n" +
+                                "        shop_id : \"7\",\n" +
+                                "        shop_name : \"大润发\",\n" +
+                                "        shop_logo : null,\n" +
+                                "        initial : null,\n" +
+                                "        city : \"0\",\n" +
+                                "        parent_id : \"0\",\n" +
+                                "        hid : \"0:0007\",\n" +
+                                "        shop_name2 : null,\n" +
+                                "        addres : \"\",\n" +
+                                "        route : \"\",\n" +
+                                "        business_hours : \"\",\n" +
+                                "        phone : \"\",\n" +
+                                "        baidu_jing : \"\",\n" +
+                                "        baidu_wei : \"\",\n" +
+                                "        gaode_jing : \"\",\n" +
+                                "        gaode_wei : \"\",\n" +
+                                "        ctime : \"2015-09-06 11:23:40\"\n" +
+                                "      },\n" +
+                                "      {\n" +
+                                "        shop_id : \"6\",\n" +
+                                "        shop_name : \"乐购\",\n" +
+                                "        shop_logo : null,\n" +
+                                "        initial : null,\n" +
+                                "        city : \"0\",\n" +
+                                "        parent_id : \"0\",\n" +
+                                "        hid : \"0:0006\",\n" +
+                                "        shop_name2 : null,\n" +
+                                "        addres : \"\",\n" +
+                                "        route : \"\",\n" +
+                                "        business_hours : \"\",\n" +
+                                "        phone : \"\",\n" +
+                                "        baidu_jing : \"\",\n" +
+                                "        baidu_wei : \"\",\n" +
+                                "        gaode_jing : \"\",\n" +
+                                "        gaode_wei : \"\",\n" +
+                                "        ctime : \"2015-09-06 11:23:33\"\n" +
+                                "      },\n" +
+                                "      {\n" +
+                                "        shop_id : \"4\",\n" +
+                                "        shop_name : \"家乐福\",\n" +
+                                "        shop_logo : null,\n" +
+                                "        initial : null,\n" +
+                                "        city : \"0\",\n" +
+                                "        parent_id : \"0\",\n" +
+                                "        hid : \"0:0004\",\n" +
+                                "        shop_name2 : null,\n" +
+                                "        addres : \"\",\n" +
+                                "        route : \"\",\n" +
+                                "        business_hours : \"\",\n" +
+                                "        phone : \"\",\n" +
+                                "        baidu_jing : \"\",\n" +
+                                "        baidu_wei : \"\",\n" +
+                                "        gaode_jing : \"\",\n" +
+                                "        gaode_wei : \"\",\n" +
+                                "        ctime : \"2015-09-06 11:23:12\"\n" +
+                                "      },\n" +
+                                "      {\n" +
+                                "        shop_id : \"1\",\n" +
+                                "        shop_name : \"易买得\",\n" +
+                                "        shop_logo : null,\n" +
+                                "        initial : null,\n" +
+                                "        city : \"0\",\n" +
+                                "        parent_id : \"0\",\n" +
+                                "        hid : \"0\",\n" +
+                                "        shop_name2 : null,\n" +
+                                "        addres : \"\",\n" +
+                                "        route : \"\",\n" +
+                                "        business_hours : \"\",\n" +
+                                "        phone : \"\",\n" +
+                                "        baidu_jing : \"\",\n" +
+                                "        baidu_wei : \"\",\n" +
+                                "        gaode_jing : \"\",\n" +
+                                "        gaode_wei : \"\",\n" +
+                                "        ctime : \"2015-09-04 08:54:12\"\n" +
+                                "      }\n" +
+                                "    ]\n" +
+                                "  }\n" +
+                                "}";
+                        Log.e("jsons=", json);
+                        final Root root = gson.fromJson(jsons, Root.class);
+
+                        if ("0".equals(String.valueOf(root.getStatus()))) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showToast("超市列表");
+                                    List<Description> list=root.getData().getList();
+                                    adapter=new HelpCheckAdapter(list,HelpCheckActivity.this);
+                                    LinearLayoutManager manager=new LinearLayoutManager(HelpCheckActivity.this);
+                                    recyclerView.setLayoutManager(manager);
+                                    recyclerView.setAdapter(adapter);
+                                }
+                            });
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showToast("失败");
+                                }
+                            });
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
     private void initView() {
         recyclerView= (RecyclerView) findViewById(R.id.help_check_recyc);
-        adapter=new HelpCheckAdapter(list,this);
-        LinearLayoutManager manager=new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
     }
     @Override
     protected void setToolBar(ActionBar action, boolean isTrue) {

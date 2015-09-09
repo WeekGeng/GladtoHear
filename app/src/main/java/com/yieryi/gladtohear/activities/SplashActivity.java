@@ -56,7 +56,7 @@ public class SplashActivity extends BaseActivity {
                 }else {
                     TApplication.token=SPCache.getString(BaseConsts.SharePreference.USER_TOKEN,"");
                     if (TextUtils.isEmpty(TApplication.token)){
-                        startActivity(SplashActivity.this, GiudeActivity.class);
+                        startActivity(SplashActivity.this, MainActivity.class);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

@@ -88,4 +88,13 @@
     <string name="title_activity_help_check">HelpCheckActivity</string>
     <string name="title_activity_market_adress">MarketAdressActivity</string>
     <string name="content">帮你算中所有促销信息和商品价格都是来自各商超官网公布的及时海报，任何疑问请与商超现场服务人员洽谈！</string>
+    <string name="title_activity_information_collection">InformationCollectionActivity</string>
+    //根据名称获取品牌列表
+    <string name="food_drink">食品饮料</string>
+    <string name="mom_baby">母婴亲子</string>
+    <string name="day_user_family">日用家化</string>
+    <string name="cosmetic_skin">护肤彩妆</string>
+
+
+
 </resources>

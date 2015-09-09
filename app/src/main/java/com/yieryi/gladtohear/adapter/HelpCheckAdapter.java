@@ -2,7 +2,6 @@ package com.yieryi.gladtohear.adapter;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +12,20 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.yieryi.gladtohear.R;
+import com.yieryi.gladtohear.bean.market_address.Description;
 import com.yieryi.gladtohear.listener.OnRecycItemClickListener;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2015/9/8.
  */
 public class HelpCheckAdapter extends RecyclerView.Adapter<HelpCheckAdapter.MyViewHolder>{
-    private List<Map<String,String>> list;
+    private List<Description> list;
     private OnRecycItemClickListener listener;
-    public HelpCheckAdapter(List<Map<String,String>> list,OnRecycItemClickListener listener) {
+    public HelpCheckAdapter(List<Description> list,OnRecycItemClickListener listener) {
         this.list=list;
         this.listener=listener;
-        Log.e("lists===",list.size()+"");
     }
 
     @Override
@@ -39,8 +37,8 @@ public class HelpCheckAdapter extends RecyclerView.Adapter<HelpCheckAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        String url=list.get(position).get("icon");
-        String name=list.get(position).get("name");
+        final String url=list.get(position).getShop_logo();
+        String name=list.get(position).getShop_name();
 //        ImageLoader.getInstance().displayImage(url,holder.icon);
         ImageLoader.getInstance().displayImage(url, holder.icon, new ImageLoadingListener() {
             @Override
@@ -49,11 +47,15 @@ public class HelpCheckAdapter extends RecyclerView.Adapter<HelpCheckAdapter.MyVi
             }
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
-
+                ((ImageView)view).setImageResource(R.mipmap.ic_launcher);
             }
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                ((ImageView)view).setImageBitmap(bitmap);
+                if (url!=null){
+                    ((ImageView)view).setImageBitmap(bitmap);
+                }else {
+                    ((ImageView)view).setImageResource(R.mipmap.ic_launcher);
+                }
             }
             @Override
             public void onLoadingCancelled(String s, View view) {

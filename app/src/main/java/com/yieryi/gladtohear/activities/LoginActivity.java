@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -133,19 +134,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                         OkHttp.asyncPost(BaseConsts.BASE_URL, paramas, new Callback() {
                             @Override
                             public void onFailure(Request request, IOException e) {
-                                Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_SHORT).show();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(LoginActivity.this,"服务器异常",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                             @Override
                             public void onResponse(final Response response) throws IOException {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        Gson gson=new Gson();
                                         if (response.isSuccessful()){
                                             try {
-                                                Toast.makeText(LoginActivity.this,"请求结果：="+response.body().string(),Toast.LENGTH_LONG).show();
+                                                String state=response.body().string();
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
+                                            showToast("登录成功");
+                                            startActivity(LoginActivity.this,MainActivity.class);
                                         }
                                     }
                                 });

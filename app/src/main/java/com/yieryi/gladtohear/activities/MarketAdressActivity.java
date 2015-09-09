@@ -22,7 +22,16 @@ public class MarketAdressActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void init(Bundle savedInstanceState) {
         initView();
+        setListeners();
     }
+
+    private void setListeners() {
+        food_drink.setOnClickListener(this);
+        mom_baby.setOnClickListener(this);
+        day_user_family.setOnClickListener(this);
+        cosmetic_skin.setOnClickListener(this);
+    }
+
     private void initView() {
         food_drink=(TextView)findViewById(R.id.food_drink);
         mom_baby=(TextView)findViewById(R.id.mom_baby);

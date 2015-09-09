@@ -276,6 +276,10 @@
             android:name=".activities.MarketAdressActivity"
             android:label="@string/title_activity_market_adress" >
         </activity>
+        <activity
+            android:name=".activities.InformationCollectionActivity"
+            android:label="@string/title_activity_information_collection" >
+        </activity>
     </application>
 
 </manifest>

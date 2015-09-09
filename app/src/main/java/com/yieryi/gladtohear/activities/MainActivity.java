@@ -112,44 +112,11 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     public void onClick(View view, int position) {
         switch (position){
             case 0:
-                final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.show();
-                dialog.setCancelable(false);
-                Window window = dialog.getWindow();
-                window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-                window.setContentView(R.layout.activity_prompt);
-                window.findViewById(R.id.title).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                final TextView dialog_next=(TextView)window.findViewById(R.id.dialog_next);
-                final CheckBox checkbox= (CheckBox) window.findViewById(R.id.checkbox);
-                checkbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (checkbox.isChecked()) {
-                            dialog_next.setClickable(true);
-                            dialog_next.setBackgroundColor(getResources().getColor(R.color.dialog_color_sle));
-                        }else {
-                            dialog_next.setClickable(false);
-                            dialog_next.setBackgroundColor(getResources().getColor(R.color.dialog_color_unsle));
-                        }
-                    }
-                });
-                window.findViewById(R.id.dialog_next).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent=new Intent(MainActivity.this,MarketSelActivity.class);
-                        startActivity(intent);
-                    }
-                });
+                alertDialog();
                 break;
             case 1:
-                Intent intent2=new Intent(MainActivity.this,HelpCheckActivity.class);
-                startActivity(intent2);
+                Intent intent1=new Intent(MainActivity.this,HelpCheckActivity.class);
+                startActivity(intent1);
                 break;
             case 2:
                 break;
@@ -158,7 +125,47 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
             case 4:
                 break;
             case 5:
+                Intent intent5=new Intent(MainActivity.this,InformationCollectionActivity.class);
+                startActivity(intent5);
                 break;
         }
+    }
+
+    private void alertDialog() {
+        final AlertDialog dialog = new AlertDialog.Builder(MainActivity.this).create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        dialog.setCancelable(false);
+        Window window = dialog.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        window.setContentView(R.layout.activity_prompt);
+        window.findViewById(R.id.title).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        final TextView dialog_next=(TextView)window.findViewById(R.id.dialog_next);
+        final CheckBox checkbox= (CheckBox) window.findViewById(R.id.checkbox);
+        checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkbox.isChecked()) {
+                    dialog_next.setClickable(true);
+                    dialog_next.setBackgroundColor(getResources().getColor(R.color.dialog_color_sle));
+                }else {
+                    dialog_next.setClickable(false);
+                    dialog_next.setBackgroundColor(getResources().getColor(R.color.dialog_color_unsle));
+                }
+            }
+        });
+        window.findViewById(R.id.dialog_next).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,MarketSelActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
     }
 }

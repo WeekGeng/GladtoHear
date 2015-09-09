@@ -25,6 +25,9 @@ import com.yieryi.gladtohear.tools.TDevide;
 import com.yieryi.gladtohear.tools.ToastControl;
 import com.yieryi.gladtohear.tools.log.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 基类的activity.
  */
@@ -36,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastCon
     private static String lastToast=null;
     private static long lastToastTime=0;
     private boolean _isVisible=false;
-
+    public static Map<String,String> paremas=new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -12,6 +12,8 @@
     <dimen name="sixteen_dip">16dp</dimen>
     <dimen name="thirty_dip">30dp</dimen>
     <dimen name="forty_eight_dip">48dp</dimen>
+    <dimen name="sixty_dip">60dp</dimen>
+    <dimen name="eighty_dip">80dp</dimen>
     <!--sp-->
     <dimen name="twelve_sp">12sp</dimen>
     <dimen name="fourteen_sp">14sp</dimen>
