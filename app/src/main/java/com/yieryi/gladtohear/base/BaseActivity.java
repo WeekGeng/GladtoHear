@@ -28,10 +28,13 @@ import com.yieryi.gladtohear.tools.log.Log;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * 基类的activity.
  */
 public abstract class BaseActivity extends AppCompatActivity implements ToastControl,DialogControl{
+    public static boolean isForeground;
     public final String TAG=BaseActivity.class.getSimpleName();
     private ActionBar actionBar;
     public PushAgent mPushAgent;
@@ -258,6 +261,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastCon
         _isVisible = true;
         super.onResume();
         MobclickAgent.onResume(this);
+        JPushInterface.onResume(this);
     }
 
     @Override
@@ -265,6 +269,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastCon
         _isVisible=false;
         super.onPause();
         MobclickAgent.onPause(this);
+        JPushInterface.onPause(this);
     }
 
     @Override

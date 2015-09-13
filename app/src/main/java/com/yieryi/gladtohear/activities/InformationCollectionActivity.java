@@ -3,6 +3,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,7 +78,12 @@ public class InformationCollectionActivity extends BaseActivity implements View.
                         OkHttp.asyncPost(BaseConsts.BASE_URL, paremas, new Callback() {
                             @Override
                             public void onFailure(Request request, IOException e) {
-                                showToast("网络出错,请检查网络链接是否正确。");
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showToast("网络出错,请检查网络链接是否正确。");
+                                    }
+                                });
                             }
                             @Override
                             public void onResponse(Response response) throws IOException {
@@ -87,6 +93,9 @@ public class InformationCollectionActivity extends BaseActivity implements View.
                                     Root root=gson.fromJson(json, Root.class);
                                     List<Description> list=root.getData().getList();
                                     adapter=new InformationCollctionAdapter(list);
+                                    LinearLayoutManager manager=new LinearLayoutManager(InformationCollectionActivity.this);
+                                    information_col_recyc.setLayoutManager(manager);
+                                    information_col_recyc.setAdapter(adapter);
                                 }
                             }
                         });

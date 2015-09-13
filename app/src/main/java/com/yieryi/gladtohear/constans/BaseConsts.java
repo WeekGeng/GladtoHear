@@ -6,7 +6,7 @@ package com.yieryi.gladtohear.constans;
 public class BaseConsts {
     private BaseConsts(){}
     //url
-    public static final String BASE_URL="http://admin.joyone2one.com/interface";
+    public static final String BASE_URL="http://admin.joyone2one.com//interface";
     /**
      * MD5加密的秘钥(sign)
      */

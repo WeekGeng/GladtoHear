@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -40,6 +41,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
     //输入框
     private EditText login_ed_phone,login_ed_pass;
@@ -66,6 +69,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             handleLogin(openId,username);
         }
     };
+
     @Override
     public int getLayout() {
         return R.layout.activity_login;
@@ -89,6 +93,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         login_tv_qq.setOnClickListener(this);
         login_tv_weixin.setOnClickListener(this);
         login_tv_sina.setOnClickListener(this);
+//        login_ed_phone.setOnKeyListener(this);
+//        login_ed_pass.setOnKeyListener(this);
     }
 
     private void initView() {
@@ -198,6 +204,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
     }
+//    @Override
+//    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+//        switch (view.getId()){
+//            case R.id.login_ed_phone:
+//                if (keyCode==keyEvent.KEYCODE_ENTER){
+//                    login_ed_pass.requestFocus();
+//                }
+//                break;
+//            case R.id.login_ed_pass:
+//                if (keyCode==keyEvent.KEYCODE_ENTER){
+//                    login_tv_login.requestFocus();
+//                }
+//                break;
+//        }
+//        return true;
+//    }
 
     /**
      * 登录监听接口

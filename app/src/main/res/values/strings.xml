@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GladToHear</string>
+    <string name="app_name">喜闻乐评</string>
 
     <string name="help_chek">帮你算</string>
     <string name="next_step">下一步</string>
@@ -94,6 +94,9 @@
     <string name="mom_baby">母婴亲子</string>
     <string name="day_user_family">日用家化</string>
     <string name="cosmetic_skin">护肤彩妆</string>
+    <string name="title_activity_jpush">JpushActivity</string>
+    <string name="title_activity_accumulated_shop">AccumulatedShopActivity</string>
+    <string name="title_activity_accumulate_shop_detail">AccumulateShopDetailActivity</string>
 
 
 

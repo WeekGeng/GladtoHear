@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.adapter.FunctionAdapter;
@@ -22,7 +24,7 @@ import com.yieryi.gladtohear.overridge.MyGridLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements FunctionAdapter.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements FunctionAdapter.OnItemClickListener,View.OnKeyListener{
     //帮你算按钮
     private List<FunctionItem> functionItems;
     private FunctionItem item;
@@ -75,7 +77,13 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
         item.setTitle("资讯汇总");
         functionItems.add(item);
     }
-
+    @Override
+    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+        if (keyCode==keyEvent.KEYCODE_ENTER){
+            Toast.makeText(MainActivity.this,"" + view.toString(),Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
     /**
      * 设置监听器
      */
@@ -121,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
             case 2:
                 break;
             case 3:
+                Intent intent3=new Intent(MainActivity.this,AccumulatedShopActivity.class);
+                startActivity(intent3);
                 break;
             case 4:
                 break;

@@ -48,7 +48,13 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
         OkHttp.asyncPost(BaseConsts.BASE_URL, paremas, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                showToast("请检查网络情况");
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showToast("请检查网络情况");
+                    }
+                });
             }
             @Override
             public void onResponse(final Response response) throws IOException {
@@ -56,112 +62,203 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
                     Gson gson = new Gson();
                     try {
                         String json = response.body().string();
-                        json = json.replace(" ", "");
-
                         String jsons="{\n" +
-                                "  status : 0,\n" +
-                                "  error : \"\",\n" +
-                                "  data : \n" +
-                                "  {\n" +
-                                "    list : \n" +
-                                "    [\n" +
-                                "      {\n" +
-                                "        shop_id : \"8\",\n" +
-                                "        shop_name : \"农工商\",\n" +
-                                "        shop_logo : null,\n" +
-                                "        initial : null,\n" +
-                                "        city : \"0\",\n" +
-                                "        parent_id : \"0\",\n" +
-                                "        hid : \"0:0008\",\n" +
-                                "        shop_name2 : null,\n" +
-                                "        addres : \"\",\n" +
-                                "        route : \"\",\n" +
-                                "        business_hours : \"\",\n" +
-                                "        phone : \"\",\n" +
-                                "        baidu_jing : \"\",\n" +
-                                "        baidu_wei : \"\",\n" +
-                                "        gaode_jing : \"\",\n" +
-                                "        gaode_wei : \"\",\n" +
-                                "        ctime : \"2015-09-06 11:23:48\"\n" +
-                                "      },\n" +
-                                "      {\n" +
-                                "        shop_id : \"7\",\n" +
-                                "        shop_name : \"大润发\",\n" +
-                                "        shop_logo : null,\n" +
-                                "        initial : null,\n" +
-                                "        city : \"0\",\n" +
-                                "        parent_id : \"0\",\n" +
-                                "        hid : \"0:0007\",\n" +
-                                "        shop_name2 : null,\n" +
-                                "        addres : \"\",\n" +
-                                "        route : \"\",\n" +
-                                "        business_hours : \"\",\n" +
-                                "        phone : \"\",\n" +
-                                "        baidu_jing : \"\",\n" +
-                                "        baidu_wei : \"\",\n" +
-                                "        gaode_jing : \"\",\n" +
-                                "        gaode_wei : \"\",\n" +
-                                "        ctime : \"2015-09-06 11:23:40\"\n" +
-                                "      },\n" +
-                                "      {\n" +
-                                "        shop_id : \"6\",\n" +
-                                "        shop_name : \"乐购\",\n" +
-                                "        shop_logo : null,\n" +
-                                "        initial : null,\n" +
-                                "        city : \"0\",\n" +
-                                "        parent_id : \"0\",\n" +
-                                "        hid : \"0:0006\",\n" +
-                                "        shop_name2 : null,\n" +
-                                "        addres : \"\",\n" +
-                                "        route : \"\",\n" +
-                                "        business_hours : \"\",\n" +
-                                "        phone : \"\",\n" +
-                                "        baidu_jing : \"\",\n" +
-                                "        baidu_wei : \"\",\n" +
-                                "        gaode_jing : \"\",\n" +
-                                "        gaode_wei : \"\",\n" +
-                                "        ctime : \"2015-09-06 11:23:33\"\n" +
-                                "      },\n" +
-                                "      {\n" +
-                                "        shop_id : \"4\",\n" +
-                                "        shop_name : \"家乐福\",\n" +
-                                "        shop_logo : null,\n" +
-                                "        initial : null,\n" +
-                                "        city : \"0\",\n" +
-                                "        parent_id : \"0\",\n" +
-                                "        hid : \"0:0004\",\n" +
-                                "        shop_name2 : null,\n" +
-                                "        addres : \"\",\n" +
-                                "        route : \"\",\n" +
-                                "        business_hours : \"\",\n" +
-                                "        phone : \"\",\n" +
-                                "        baidu_jing : \"\",\n" +
-                                "        baidu_wei : \"\",\n" +
-                                "        gaode_jing : \"\",\n" +
-                                "        gaode_wei : \"\",\n" +
-                                "        ctime : \"2015-09-06 11:23:12\"\n" +
-                                "      },\n" +
-                                "      {\n" +
-                                "        shop_id : \"1\",\n" +
-                                "        shop_name : \"易买得\",\n" +
-                                "        shop_logo : null,\n" +
-                                "        initial : null,\n" +
-                                "        city : \"0\",\n" +
-                                "        parent_id : \"0\",\n" +
-                                "        hid : \"0\",\n" +
-                                "        shop_name2 : null,\n" +
-                                "        addres : \"\",\n" +
-                                "        route : \"\",\n" +
-                                "        business_hours : \"\",\n" +
-                                "        phone : \"\",\n" +
-                                "        baidu_jing : \"\",\n" +
-                                "        baidu_wei : \"\",\n" +
-                                "        gaode_jing : \"\",\n" +
-                                "        gaode_wei : \"\",\n" +
-                                "        ctime : \"2015-09-04 08:54:12\"\n" +
-                                "      }\n" +
-                                "    ]\n" +
-                                "  }\n" +
+                                "    \"status\": 0, \n" +
+                                "    \"error\": \"\", \n" +
+                                "    \"data\": {\n" +
+                                "        \"list\": [\n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"184\", \n" +
+                                "                \"shop_name\": \"易买得\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"50\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0184\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-11 16:49:26\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"174\", \n" +
+                                "                \"shop_name\": \"欧尚\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0174\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-11 16:41:22\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"169\", \n" +
+                                "                \"shop_name\": \"乐天玛特\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0169\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-11 16:31:43\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"168\", \n" +
+                                "                \"shop_name\": \"麦德龙\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0168\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-11 15:00:01\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"98\", \n" +
+                                "                \"shop_name\": \"卜蜂莲花\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0098\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-10 16:44:06\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"37\", \n" +
+                                "                \"shop_name\": \"沃尔玛\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0037\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-10 15:37:27\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"8\", \n" +
+                                "                \"shop_name\": \"农工商\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0008\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-06 11:23:48\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"7\", \n" +
+                                "                \"shop_name\": \"大润发\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0007\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-06 11:23:40\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"6\", \n" +
+                                "                \"shop_name\": \"乐购\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0006\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-06 11:23:33\"\n" +
+                                "            }, \n" +
+                                "            {\n" +
+                                "                \"shop_id\": \"4\", \n" +
+                                "                \"shop_name\": \"家乐福\", \n" +
+                                "                \"shop_logo\": \"\", \n" +
+                                "                \"initial\": \"\", \n" +
+                                "                \"city\": \"0\", \n" +
+                                "                \"parent_id\": \"0\", \n" +
+                                "                \"hid\": \"0:0004\", \n" +
+                                "                \"shop_name2\": \"\", \n" +
+                                "                \"addres\": \"\", \n" +
+                                "                \"route\": \"\", \n" +
+                                "                \"business_hours\": \"\", \n" +
+                                "                \"phone\": \"\", \n" +
+                                "                \"baidu_jing\": \"\", \n" +
+                                "                \"baidu_wei\": \"\", \n" +
+                                "                \"gaode_jing\": \"\", \n" +
+                                "                \"gaode_wei\": \"\", \n" +
+                                "                \"ctime\": \"2015-09-06 11:23:12\"\n" +
+                                "            }\n" +
+                                "        ]\n" +
+                                "    }\n" +
                                 "}";
                         Log.e("jsons=", json);
                         final Root root = gson.fromJson(jsons, Root.class);

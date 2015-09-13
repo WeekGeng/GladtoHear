@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yieryi.gladtohear.bean.informationcollaction.Description;
+import com.yieryi.gladtohear.tools.log.Log;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class InformationCollctionAdapter extends RecyclerView.Adapter<Informatio
     private List<Description> list;
     public InformationCollctionAdapter(List<Description> list){
         this.list=list;
+        android.util.Log.e("list.size()=",list.size()+"");
     }
     @Override
     public InformationCollctionAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
