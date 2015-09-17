@@ -31,19 +31,20 @@ public class CatlogConsts {
         public static final String params_sign = "26f53261ff04d4dda4359260205cf0d1";
     }
     /**
-     * 资讯列表
-     */
-    public class Information{
-        public static final String params_app = "news";
-        public static final String params_class = "getnewslist";
-        public static final String params_sign = "1b84c7f0ad96051add15393009b77ae0";
-    }
-    /**
      * 积分商城
      */
     public class Accumulation{
         public static final String params_app = "product";
         public static final String params_class = "getproductsbystatus";
         public static final String params_sign = "a8f9422aabcc6c995f5e55db3185b5d3";
+    }
+
+    /**
+     * main 品牌资讯列表
+     */
+    public class Brand{
+        public static final String params_app = "news";
+        public static final String params_class = "getnewslist";
+        public static final String params_sign = "1b84c7f0ad96051add15393009b77ae0";
     }
 }

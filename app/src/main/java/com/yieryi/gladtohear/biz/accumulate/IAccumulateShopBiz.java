@@ -1,4 +1,4 @@
-package com.yieryi.gladtohear.biz;
+package com.yieryi.gladtohear.biz.accumulate;
 
 import com.yieryi.gladtohear.bean.accumulate.Root;
 import com.yieryi.gladtohear.listener.RequestListener;

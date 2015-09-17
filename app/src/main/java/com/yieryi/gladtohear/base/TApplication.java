@@ -46,7 +46,7 @@ public class TApplication extends Application{
     //高德地图定位
     private static String spName="yiErYi_gaoDe_local";
     private static SharedPreferences.Editor edit;
-
+    public static int u_id;
     public static String token="";
     private PushAgent mPushAgent;
     /**

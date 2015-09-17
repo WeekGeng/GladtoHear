@@ -26,7 +26,7 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            startActivity(WelActivity.this, LoginActivity.class, "provience", provience);
+            startActivity(WelActivity.this, MainActivity.class, "provience", provience);
             finish();
         }
     };

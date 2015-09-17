@@ -1,5 +1,4 @@
 package com.yieryi.gladtohear.activities;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,7 +15,7 @@ import com.yieryi.gladtohear.adapter.accumulate.AccumulateShopAdapter;
 import com.yieryi.gladtohear.base.BaseActivity;
 import com.yieryi.gladtohear.bean.accumulate.Product;
 import com.yieryi.gladtohear.bean.accumulate.Root;
-import com.yieryi.gladtohear.biz.AccumulateShopBiz;
+import com.yieryi.gladtohear.biz.accumulate.AccumulateShopBiz;
 import com.yieryi.gladtohear.listener.OnRecycItemClickListener;
 import com.yieryi.gladtohear.listener.RequestListener;
 import com.yieryi.gladtohear.view.SwipeRefreshView;

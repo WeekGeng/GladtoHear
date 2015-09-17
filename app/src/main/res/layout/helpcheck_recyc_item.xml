@@ -11,7 +11,7 @@
         android:layout_gravity="center_vertical"
         android:src="@mipmap/sina"
         android:scaleType="fitXY"
-        android:layout_margin="@dimen/five_dip"
+        android:layout_marginRight="@dimen/five_dip"
         />
     <TextView
         android:id="@+id/help_check_market_name"
@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="16sp"
-        android:padding="10dp"
+        android:padding="@dimen/five_dip"
         android:text="大润发超市"
         android:textColor="@color/text_half_black_color"
         android:background="@drawable/cicle_back_market"

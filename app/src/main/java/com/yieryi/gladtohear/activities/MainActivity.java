@@ -3,28 +3,32 @@ package com.yieryi.gladtohear.activities;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.adapter.FunctionAdapter;
 import com.yieryi.gladtohear.bean.FunctionItem;
+import com.yieryi.gladtohear.fragment.main.helpcheck.MacketSelFragment;
+import com.yieryi.gladtohear.fragment.main.main.FirstFragment;
+import com.yieryi.gladtohear.fragment.main.main.SecondFragment;
+import com.yieryi.gladtohear.fragment.main.main.ThirdFragment;
 import com.yieryi.gladtohear.overridge.MyGridLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements FunctionAdapter.OnItemClickListener,View.OnKeyListener{
+public class MainActivity extends AppCompatActivity implements FunctionAdapter.OnItemClickListener{
     //帮你算按钮
     private List<FunctionItem> functionItems;
     private FunctionItem item;
@@ -34,6 +38,14 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     private TextView main_local_tv;
     private String provience;
     private ImageView user_center;
+    private FirstFragment firstFragment;
+    private SecondFragment secondFragment;
+    private ThirdFragment thirdFragment;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
+    private TextView main_new_brand_tv,main_release_brand_tv,main_story_brand_tv;
+    private int whichSel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,18 +89,16 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
         item.setTitle("资讯汇总");
         functionItems.add(item);
     }
-    @Override
-    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-        if (keyCode==keyEvent.KEYCODE_ENTER){
-            Toast.makeText(MainActivity.this,"" + view.toString(),Toast.LENGTH_SHORT).show();
-        }
-        return true;
-    }
     /**
      * 设置监听器
      */
     private void setListeners() {
+        main_local_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
         user_center.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,16 +106,73 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
                 startActivity(intent);
             }
         });
+        main_new_brand_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (whichSel!=0){
+                    firstFragment=new FirstFragment();
+                    setFragmentChose(firstFragment);
+                    main_new_brand_tv.setTextColor(getResources().getColor(R.color.color_white));
+                    main_new_brand_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
 
+                    main_release_brand_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    main_release_brand_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+
+                    main_story_brand_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    main_story_brand_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    whichSel=0;
+                }
+            }
+        });
+        main_release_brand_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (whichSel!=1) {
+                    secondFragment = new SecondFragment();
+                    setFragmentChose(secondFragment);
+                    main_release_brand_tv.setTextColor(getResources().getColor(R.color.color_white));
+                    main_release_brand_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
+
+                    main_new_brand_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    main_new_brand_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+
+                    main_story_brand_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    main_story_brand_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    whichSel=1;
+                }
+            }
+        });
+        main_story_brand_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (whichSel!=2) {
+                    thirdFragment = new ThirdFragment();
+                    setFragmentChose(thirdFragment);
+                    main_story_brand_tv.setTextColor(getResources().getColor(R.color.color_white));
+                    main_story_brand_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
+
+                    main_new_brand_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    main_new_brand_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+
+                    main_release_brand_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    main_release_brand_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    whichSel=2;
+                }
+            }
+        });
     }
 
     /**
      * 初始化界面
      */
     private void initView() {
+        main_new_brand_tv=(TextView)findViewById(R.id.main_new_brand_tv);
+        main_release_brand_tv=(TextView)findViewById(R.id.main_release_brand_tv);
+        main_story_brand_tv=(TextView)findViewById(R.id.main_story_brand_tv);
 
         main_local_tv=(TextView)findViewById(R.id.main_local_tv);
         main_local_tv.setText(provience);
+
         user_center=(ImageView)findViewById(R.id.user_center);
         main_function_recyc= (RecyclerView) findViewById(R.id.main_function_recyc);
         adapter=new FunctionAdapter(functionItems,this);
@@ -114,8 +181,24 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
         gridLayoutManager.setSmoothScrollbarEnabled(true);
         main_function_recyc.setLayoutManager(gridLayoutManager);
         main_function_recyc.setAdapter(adapter);
-    }
 
+
+        firstFragment=new FirstFragment();
+        manager=getSupportFragmentManager();
+        setFragmentChose(firstFragment);
+
+        main_new_brand_tv.setTextColor(getResources().getColor(R.color.color_white));
+        main_new_brand_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
+    }
+    /**
+     * 设置Fragment
+     * @param fragment
+     */
+    private void setFragmentChose(Fragment fragment) {
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.main_content,fragment);
+        transaction.commit();
+    }
     @Override
     public void onClick(View view, int position) {
         switch (position){

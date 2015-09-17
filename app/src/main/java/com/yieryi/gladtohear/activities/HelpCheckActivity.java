@@ -1,297 +1,55 @@
 package com.yieryi.gladtohear.activities;
-
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.google.gson.Gson;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import android.widget.Spinner;
+import android.widget.TextView;
 import com.yieryi.gladtohear.R;
-import com.yieryi.gladtohear.adapter.HelpCheckAdapter;
 import com.yieryi.gladtohear.base.BaseActivity;
-import com.yieryi.gladtohear.bean.market_address.Description;
-import com.yieryi.gladtohear.bean.market_address.Root;
-import com.yieryi.gladtohear.constans.BaseConsts;
-import com.yieryi.gladtohear.constans.CatlogConsts;
+import com.yieryi.gladtohear.fragment.main.helpcheck.BrandSelFragment;
+import com.yieryi.gladtohear.fragment.main.helpcheck.CatlogSelFragment;
+import com.yieryi.gladtohear.fragment.main.helpcheck.MacketSelFragment;
 import com.yieryi.gladtohear.listener.OnRecycItemClickListener;
-import com.yieryi.gladtohear.network.OkHttp;
+public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickListener,View.OnClickListener{
+    private MacketSelFragment macketSelFragment;
+    private BrandSelFragment brandSelFragment;
+    private CatlogSelFragment catlogSelFragment;
+    private FragmentManager manager;
+    private FragmentTransaction transaction;
+    private TextView help_check_macket_sel_tv,help_check_brand_sel_tv,help_check_catlog_sel_tv;
+    private int tagSel;
 
-import java.io.IOException;
-import java.util.List;
-
-public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickListener{
-    private RecyclerView recyclerView;
-    private HelpCheckAdapter adapter;
     @Override
     public int getLayout() {
         return R.layout.activity_help_check;
     }
     @Override
     public void init(Bundle savedInstanceState) {
-//        initData();
         initView();
-
-        getMarcket();
+        setListeners();
     }
 
-    private void getMarcket() {
-        paremas.put(BaseConsts.APP, CatlogConsts.GetMarket.params_app);
-        paremas.put(BaseConsts.CLASS, CatlogConsts.GetMarket.params_class);
-        paremas.put(BaseConsts.SIGN, CatlogConsts.GetMarket.params_sign);
-        paremas.put("parent_id",String.valueOf(0));
-        OkHttp.asyncPost(BaseConsts.BASE_URL, paremas, new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        showToast("请检查网络情况");
-                    }
-                });
-            }
-            @Override
-            public void onResponse(final Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    try {
-                        String json = response.body().string();
-                        String jsons="{\n" +
-                                "    \"status\": 0, \n" +
-                                "    \"error\": \"\", \n" +
-                                "    \"data\": {\n" +
-                                "        \"list\": [\n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"184\", \n" +
-                                "                \"shop_name\": \"易买得\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"50\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0184\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-11 16:49:26\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"174\", \n" +
-                                "                \"shop_name\": \"欧尚\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0174\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-11 16:41:22\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"169\", \n" +
-                                "                \"shop_name\": \"乐天玛特\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0169\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-11 16:31:43\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"168\", \n" +
-                                "                \"shop_name\": \"麦德龙\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0168\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-11 15:00:01\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"98\", \n" +
-                                "                \"shop_name\": \"卜蜂莲花\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0098\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-10 16:44:06\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"37\", \n" +
-                                "                \"shop_name\": \"沃尔玛\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0037\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-10 15:37:27\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"8\", \n" +
-                                "                \"shop_name\": \"农工商\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0008\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-06 11:23:48\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"7\", \n" +
-                                "                \"shop_name\": \"大润发\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0007\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-06 11:23:40\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"6\", \n" +
-                                "                \"shop_name\": \"乐购\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0006\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-06 11:23:33\"\n" +
-                                "            }, \n" +
-                                "            {\n" +
-                                "                \"shop_id\": \"4\", \n" +
-                                "                \"shop_name\": \"家乐福\", \n" +
-                                "                \"shop_logo\": \"\", \n" +
-                                "                \"initial\": \"\", \n" +
-                                "                \"city\": \"0\", \n" +
-                                "                \"parent_id\": \"0\", \n" +
-                                "                \"hid\": \"0:0004\", \n" +
-                                "                \"shop_name2\": \"\", \n" +
-                                "                \"addres\": \"\", \n" +
-                                "                \"route\": \"\", \n" +
-                                "                \"business_hours\": \"\", \n" +
-                                "                \"phone\": \"\", \n" +
-                                "                \"baidu_jing\": \"\", \n" +
-                                "                \"baidu_wei\": \"\", \n" +
-                                "                \"gaode_jing\": \"\", \n" +
-                                "                \"gaode_wei\": \"\", \n" +
-                                "                \"ctime\": \"2015-09-06 11:23:12\"\n" +
-                                "            }\n" +
-                                "        ]\n" +
-                                "    }\n" +
-                                "}";
-                        Log.e("jsons=", json);
-                        final Root root = gson.fromJson(jsons, Root.class);
-
-                        if ("0".equals(String.valueOf(root.getStatus()))) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showToast("超市列表");
-                                    List<Description> list=root.getData().getList();
-                                    adapter=new HelpCheckAdapter(list,HelpCheckActivity.this);
-                                    LinearLayoutManager manager=new LinearLayoutManager(HelpCheckActivity.this);
-                                    recyclerView.setLayoutManager(manager);
-                                    recyclerView.setAdapter(adapter);
-                                }
-                            });
-                        } else {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showToast("失败");
-                                }
-                            });
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+    private void setListeners() {
+        help_check_macket_sel_tv.setOnClickListener(this);
+        help_check_brand_sel_tv.setOnClickListener(this);
+        help_check_catlog_sel_tv.setOnClickListener(this);
     }
+
     private void initView() {
-        recyclerView= (RecyclerView) findViewById(R.id.help_check_recyc);
+        macketSelFragment=new MacketSelFragment();
+        manager=getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.add(R.id.help_check_content,macketSelFragment);
+        transaction.commit();
+        help_check_macket_sel_tv=(TextView)findViewById(R.id.help_check_macket_sel_tv);
+        help_check_brand_sel_tv=(TextView)findViewById(R.id.help_check_brand_sel_tv);
+        help_check_catlog_sel_tv=(TextView)findViewById(R.id.help_check_catlog_sel_tv);
+        help_check_macket_sel_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
+        help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.color_white));
     }
     @Override
     protected void setToolBar(ActionBar action, boolean isTrue) {
@@ -309,5 +67,67 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
     @Override
     public void onItemClick(View view, int position) {
         startActivity(HelpCheckActivity.this, MarketAdressActivity.class, "position", String.valueOf(position));
+    }
+
+    /**
+     * 设置Fragment
+     * @param fragment
+     */
+    private void setFragmentChose(Fragment fragment) {
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.help_check_content,fragment);
+        transaction.commit();
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.help_check_macket_sel_tv:
+                if (tagSel!=0){
+                    macketSelFragment=new MacketSelFragment();
+                    setFragmentChose(macketSelFragment);
+                    help_check_macket_sel_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
+                    help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.color_white));
+
+                    help_check_brand_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+
+                    help_check_catlog_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    tagSel=0;
+                }
+                break;
+            case R.id.help_check_brand_sel_tv:
+                if (tagSel!=1){
+                    brandSelFragment=new BrandSelFragment();
+                    setFragmentChose(brandSelFragment);
+
+                    help_check_brand_sel_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
+                    help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.color_white));
+
+                    help_check_macket_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+
+                    help_check_catlog_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    tagSel=1;
+                }
+                break;
+            case  R.id.help_check_catlog_sel_tv:
+                if (tagSel!=2){
+                    catlogSelFragment=new CatlogSelFragment();
+                    setFragmentChose(catlogSelFragment);
+
+                    help_check_catlog_sel_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
+                    help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.color_white));
+
+                    help_check_macket_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+
+                    help_check_brand_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
+                    help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    tagSel=2;
+                }
+                break;
+        }
     }
 }

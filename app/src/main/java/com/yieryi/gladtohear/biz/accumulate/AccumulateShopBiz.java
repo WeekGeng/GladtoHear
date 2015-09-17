@@ -1,4 +1,4 @@
-package com.yieryi.gladtohear.biz;
+package com.yieryi.gladtohear.biz.accumulate;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;

@@ -1,24 +1,22 @@
 package com.yieryi.gladtohear.activities;
-
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.adapter.MarketSelAdapter;
+import com.yieryi.gladtohear.base.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
-
-public class MarketSelActivity extends AppCompatActivity implements MarketSelAdapter.OnItemClickListener{
+/**
+ * 把你算超市选择界面
+ */
+public class MarketSelActivity extends BaseActivity implements MarketSelAdapter.OnItemClickListener{
     private RecyclerView recycle_market;
     private String[] markets;
     private String[] otherMarkets;
@@ -26,30 +24,41 @@ public class MarketSelActivity extends AppCompatActivity implements MarketSelAda
     boolean isSel;
     private List<String> list;
     private TextView tv_next;
-    private Toolbar toolbar;
+
+    /**
+     *初始化加载view
+     * @return
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_market_sel);
+    public int getLayout() {
+        return R.layout.activity_market_sel;
+    }
+
+    /**
+     * 初始化参数
+     * @param savedInstanceState
+     */
+    @Override
+    public void init(Bundle savedInstanceState) {
         initView();
-        initToolbar();
         setData();
         setListener();
     }
 
-    private void initToolbar() {
-        try {
-            toolbar = (Toolbar)findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("超市选择");
-            toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        } catch (NullPointerException e) {
-
-        }
+    /**
+     * 设置toolbar
+     * @param action
+     * @param isTrue
+     */
+    @Override
+    protected void setToolBar(ActionBar action, boolean isTrue) {
+        action.setTitle("超市选择");
+        action.setHomeButtonEnabled(isTrue);
     }
 
+    /**
+     * 设置监听器
+     */
     private void setListener() {
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,14 +67,17 @@ public class MarketSelActivity extends AppCompatActivity implements MarketSelAda
                     Log.i("market",market+"aaaaaaaa");
                 }
                 if (list.isEmpty()) {
-                    Toast.makeText(MarketSelActivity.this, "请先选择超市", Toast.LENGTH_SHORT).show();
+                    showToast("请先选择超市");
                     return;
                 }
-                Intent intent = new Intent(MarketSelActivity.this, CatlogsSelActivity.class);
-                startActivity(intent);
+                startActivity(MarketSelActivity.this, CatlogsSelActivity.class);
             }
         });
     }
+
+    /**
+     * 设置参数 请求应该来自网络
+     */
     private void setData() {
         markets=getResources().getStringArray(R.array.Market_name);
         if (markets.length%2!=0){
@@ -82,11 +94,20 @@ public class MarketSelActivity extends AppCompatActivity implements MarketSelAda
 
     }
 
+    /**
+     * 初始化参数
+     */
     private void initView() {
         recycle_market= (RecyclerView) findViewById(R.id.recycle_market);
         tv_next=(TextView)findViewById(R.id.tv_next);
         list=new ArrayList<>();
     }
+
+    /**
+     * recycleview的参数回传
+     * @param v
+     * @param positon
+     */
     @Override
     public void onClick(View v,int positon) {
         if (isSel){

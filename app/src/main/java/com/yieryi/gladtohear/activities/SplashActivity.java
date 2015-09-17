@@ -45,7 +45,7 @@ public class SplashActivity extends BaseActivity {
     };
     private void initTask() {
         final boolean isFirstInto= SPCache.getBoolean(
-                BaseConsts.SharePreference.IS_FIRST_INTO,false);
+                BaseConsts.SharePreference.IS_FIRST_INTO,true);
         Timer timer=new Timer();
         TimerTask task=new TimerTask() {
             @Override

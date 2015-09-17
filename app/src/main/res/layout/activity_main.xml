@@ -20,44 +20,56 @@
                 >
 
             </android.support.v7.widget.RecyclerView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/brand_dynamic_rounded_rectangle"
-                android:text="品牌动态"
-                android:paddingLeft="10dp"
-                android:gravity="center_vertical"
-                />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/five_dip"
+                android:padding="1dp"
+                android:background="@drawable/cicle_back_catlog_sel"
                 android:orientation="horizontal"
                 >
-                <ImageView
+                <TextView
+                    android:id="@+id/main_new_brand_tv"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:src="@mipmap/test"
-                    android:scaleType="fitXY"
-                    android:layout_margin="2dp"
+                    android:text="品牌新品"
+                    android:drawablePadding="@dimen/five_dip"
+                    android:drawableTop="@mipmap/pinpai_activity"
+                    android:gravity="center_horizontal"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/text_half_red"
+                    />
+                <TextView
+                    android:id="@+id/main_release_brand_tv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="品牌发布"
+                    android:drawableTop="@mipmap/pinpai_release"
+                    android:drawablePadding="@dimen/five_dip"
+                    android:gravity="center_horizontal"
                     android:layout_height="wrap_content" />
-                <ImageView
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/text_half_red"
+                    />
+                <TextView
+                    android:id="@+id/main_story_brand_tv"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/test"
-                    android:layout_margin="2dp"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:layout_width="0dp"
-                    android:scaleType="fitXY"
-                    android:layout_weight="1"
-                    android:layout_margin="2dp"
-                    android:src="@mipmap/test"
+                    android:drawableTop="@mipmap/pinpai_story"
+                    android:text="品牌故事"
+                    android:drawablePadding="@dimen/five_dip"
+                    android:gravity="center_horizontal"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <FrameLayout
                 android:id="@+id/main_content"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/two_dip"
                 android:layout_height="wrap_content">
 
             </FrameLayout>

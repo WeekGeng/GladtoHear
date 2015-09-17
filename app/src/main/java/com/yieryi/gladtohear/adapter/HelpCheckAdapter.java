@@ -36,25 +36,25 @@ public class HelpCheckAdapter extends RecyclerView.Adapter<HelpCheckAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final String url=list.get(position).getShop_logo();
         String name=list.get(position).getShop_name();
 //        ImageLoader.getInstance().displayImage(url,holder.icon);
         ImageLoader.getInstance().displayImage(url, holder.icon, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
-                ((ImageView)view).setImageResource(R.mipmap.ic_launcher);
+               holder.icon.setImageResource(R.mipmap.ic_launcher);
             }
             @Override
             public void onLoadingFailed(String s, View view, FailReason failReason) {
-                ((ImageView)view).setImageResource(R.mipmap.ic_launcher);
+                holder.icon.setImageResource(R.mipmap.ic_launcher);
             }
             @Override
             public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                if (url!=null){
-                    ((ImageView)view).setImageBitmap(bitmap);
+                if (!"".equals(url)){
+                    holder.icon.setImageBitmap(bitmap);
                 }else {
-                    ((ImageView)view).setImageResource(R.mipmap.ic_launcher);
+                    holder.icon.setImageResource(R.mipmap.ic_launcher);
                 }
             }
             @Override
