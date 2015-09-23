@@ -5,6 +5,7 @@
     <string name="next_step">下一步</string>
     <string name="ok">确定</string>
     <string name="action_settings">Settings</string>
+    <string name="login">登陆</string>
     <string-array name="Market_name">
         <item>农工商</item>
         <item>乐购</item>
@@ -97,6 +98,10 @@
     <string name="title_activity_jpush">JpushActivity</string>
     <string name="title_activity_accumulated_shop">AccumulatedShopActivity</string>
     <string name="title_activity_accumulate_shop_detail">AccumulateShopDetailActivity</string>
+    <string name="title_activity_user_space">UserSpaceActivity</string>
+    <string name="title_activity_basic_information">BasicInformationActivity</string>
+    <string name="title_activity_help_check_goods_detail">HelpCheckGoodsDetailActivity</string>
+    <string name="title_activity_regist">RegistActivity</string>
 
 
 

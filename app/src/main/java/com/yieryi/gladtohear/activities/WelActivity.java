@@ -16,6 +16,10 @@ import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.base.BaseActivity;
 import com.yieryi.gladtohear.tools.AmapLocationUtils;
 import com.yieryi.gladtohear.tools.OnLocalListener;
+import com.yieryi.gladtohear.tools.sp.SPCache;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class WelActivity extends BaseActivity implements OnLocalListener{
     private TextView tv_location;
@@ -26,8 +30,20 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            startActivity(WelActivity.this, MainActivity.class, "provience", provience);
-            finish();
+            switch (msg.what){
+                case  0:
+                    if (provience==null||"".equals(provience)){
+                        provience="上海";
+                    }
+                    SPCache.putString("provience", provience);
+                    startActivity(WelActivity.this, MainActivity.class, "provience", provience);
+                    finish();
+                    break;
+                case 1:
+
+                    break;
+            }
+
         }
     };
     @Override
@@ -38,6 +54,21 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
     @Override
     public void init(Bundle savedInstanceState) {
         initView();
+        boolean setLocation=getIntent().getBooleanExtra("setLocation", false);
+        if (!setLocation){
+            Timer timer_location = new Timer();
+            TimerTask task_location=new TimerTask() {
+                @Override
+                public void run() {
+                    stopLocation();
+                    showToast("定位失败");
+                    handler.sendEmptyMessage(0);
+                }
+            };
+            if (provience == null || "".equals(provience)) {
+                timer_location.schedule(task_location, 5000);
+            }
+        }
     }
 
     @Override
@@ -82,7 +113,6 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
     public void setError(String error) {
         showMsg(this, error);
         //接下来处理定位失败后要做的事情
-
     }
 
     /**
@@ -92,6 +122,10 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
     @Override
     public void onSuccess(AMapLocation aMapLocation) {
         provience=aMapLocation.getProvince();
+        if (provience==null||"".equals(provience)){
+            showToast("请检查网络,或者查看GPS");
+            return;
+        }
         showMsg(this,"当前定位城市为："+provience);
         tv_location.setText(provience);
         handler.postDelayed(new Runnable() {

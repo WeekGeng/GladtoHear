@@ -7,7 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.yieryi.gladtohear.constans.BaseConsts;
-import com.yieryi.gladtohear.tools.log.SPCache;
+import com.yieryi.gladtohear.tools.sp.SPCache;
 
 /**
  * Created by Administrator on 2015/9/7.

@@ -1,9 +1,9 @@
-package com.yieryi.gladtohear.tools.log;
-
-
+package com.yieryi.gladtohear.tools.sp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+
+import com.yieryi.gladtohear.tools.log.Log;
 
 import java.lang.ref.SoftReference;
 import java.lang.reflect.InvocationTargetException;
@@ -12,9 +12,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Created by Administrator on 2015/8/31.
+ * 项目名称：喜闻乐评
+ * 类描述：
+ * 创建人：G.C
+ * 创建时间：15/9/18 上午11:24
  */
 public class SPCache {
+
     private static final String TAG = SPCache.class.getSimpleName();
     private static SPCache INSTANCE;
     private ConcurrentMap<String, SoftReference<Object>> mCache;
@@ -244,4 +248,5 @@ public class SPCache {
     private SharedPreferences getSharedPreferences() {
         return mContext.getSharedPreferences(mPrefFileName, Context.MODE_PRIVATE);
     }
+
 }

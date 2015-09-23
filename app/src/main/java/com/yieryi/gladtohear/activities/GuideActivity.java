@@ -13,8 +13,8 @@ import com.yieryi.gladtohear.fragment.main.guide.FragmentGuideTwo;
 
 import java.util.ArrayList;
 import java.util.List;
-public class GiudeActivity extends BaseActivity {
-    private final String  TAG=GiudeActivity.class.getSimpleName();
+public class GuideActivity extends BaseActivity {
+    private final String  TAG=GuideActivity.class.getSimpleName();
     private List<Fragment> list=new ArrayList<>();
     private Fragment guideOne,guideTwo,guideThree;
     private ViewPager guide_vp;

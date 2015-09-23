@@ -1,5 +1,4 @@
 package com.yieryi.gladtohear.activities;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -10,7 +9,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -22,11 +20,10 @@ import com.yieryi.gladtohear.adapter.catlogs.ChildItem;
 import com.yieryi.gladtohear.adapter.catlogs.GoodsListAdapter;
 import com.yieryi.gladtohear.adapter.catlogs.GroupItem;
 import com.yieryi.gladtohear.base.BaseActivity;
-import com.yieryi.gladtohear.listener.OnRecycItemClickListener;
 import com.yieryi.gladtohear.overridge.MyGridLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
-public class CatlogsSelActivity extends BaseActivity implements OnRecycItemClickListener{
+public class CatlogsSelActivity extends BaseActivity implements GoodsListAdapter.OnItemClickListener{
     private List<GroupItem> groupItemList;
     private GroupItem groupItem;
     private ChildItem childItem;
@@ -72,7 +69,7 @@ public class CatlogsSelActivity extends BaseActivity implements OnRecycItemClick
         list.add("电动车");
         list.add("洗护用品");
         list.add("清洁用品");
-        CatlogListAdapter adapter=new CatlogListAdapter(list,this);
+        CatlogListAdapter adapter=new CatlogListAdapter(list);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         catlog_sel_recycle.setLayoutManager(manager);
         catlog_sel_recycle.setAdapter(adapter);
@@ -343,8 +340,8 @@ public class CatlogsSelActivity extends BaseActivity implements OnRecycItemClick
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
+//    @Override
+//    public void onItemClick(View view, int position) {
 //
 //        if (isSel){
 //            ((TextView)view).setBackgroundResource(R.drawable.cicle_back_login_tv);
@@ -365,5 +362,30 @@ public class CatlogsSelActivity extends BaseActivity implements OnRecycItemClick
 //        }else {
 //            badgeView.setVisibility(View.GONE);
 //        }
+//    }
+
+    @Override
+    public void onClick(View view) {
+        if (isSel){
+            ((TextView)view).setTextColor(getResources().getColor(R.color.color_white));
+//            ((TextView)view).setBackgroundResource(R.drawable.cicle_back_login_tv);
+            view.setBackground(getResources().getDrawable(R.drawable.cicle_back_login_tv));
+            record.remove(((TextView) view).getText().toString());
+            isSel=false;
+        }else {
+            ((TextView)view).setTextColor(getResources().getColor(R.color.text_half_red));
+//            ((TextView)view).setBackgroundResource(R.drawable.cicle_back_catlog_sel);
+            view.setBackgroundResource(R.drawable.cicle_back_catlog_sel);
+            record.add(((TextView) view).getText().toString());
+            isSel=true;
+        }
+        BadgeView badgeView = new BadgeView(this);
+        if (record.size()!=0){
+            badgeView.setVisibility(View.VISIBLE);
+            badgeView.setText(record.size()+"");
+            badgeView.setTargetView(catlog_sel_buy_count_tv);
+        }else {
+            badgeView.setVisibility(View.GONE);
+        }
     }
 }

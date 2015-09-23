@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.MyViewHolder> {
     private List<String> list;
-    private OnRecycItemClickListener listener;
-    public GoodsListAdapter(List<String> list,OnRecycItemClickListener listener) {
+    private OnItemClickListener listener;
+    public GoodsListAdapter(List<String> list,OnItemClickListener listener) {
         this.list = list;
         this.listener=listener;
     }
@@ -22,12 +22,17 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.MyVi
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.goods_list_item,parent,false);
         MyViewHolder holder=new MyViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClick(view);
+            }
+        });
         return holder;
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tv.setText(list.get(position));
-        listener.onItemClick(holder.tv,position);
     }
     @Override
     public int getItemCount() {
@@ -39,5 +44,8 @@ public class GoodsListAdapter extends RecyclerView.Adapter<GoodsListAdapter.MyVi
             super(itemView);
             tv=(TextView)itemView.findViewById(R.id.goods_sel_item_tv);
         }
+    }
+    public interface OnItemClickListener{
+        void onClick(View view);
     }
 }

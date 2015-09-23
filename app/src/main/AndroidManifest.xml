@@ -259,7 +259,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.GiudeActivity"
+            android:name=".activities.GuideActivity"
             android:label="@string/title_activity_giude" >
         </activity>
         <activity
@@ -380,6 +380,22 @@
         <activity
             android:name=".activities.AccumulateShopDetailActivity"
             android:label="@string/title_activity_accumulate_shop_detail" >
+        </activity>
+        <activity
+            android:name=".activities.UserSpaceActivity"
+            android:label="@string/title_activity_user_space" >
+        </activity>
+        <activity
+            android:name=".activities.BasicInformationActivity"
+            android:label="@string/title_activity_basic_information" >
+        </activity>
+        <activity
+            android:name=".activities.HelpCheckGoodsDetailActivity"
+            android:label="@string/title_activity_help_check_goods_detail" >
+        </activity>
+        <activity
+            android:name=".activities.RegistActivity"
+            android:label="@string/title_activity_regist" >
         </activity>
     </application>
 

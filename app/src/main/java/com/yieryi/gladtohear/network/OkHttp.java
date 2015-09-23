@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
-
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
@@ -14,20 +14,26 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.yieryi.gladtohear.base.TApplication;
 import com.yieryi.gladtohear.tools.ImageUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by N.Sun
+ *
  */
 public class OkHttp {
     private static final String TAG = "OkHttp";
     public static final OkHttpClient mOkHttpClient = new OkHttpClient();
+    public static final int NET_STATE=0;
+    /**
+     * 设置的缓存大小
+     */
     private static int cacheSize = 10 * 1024 * 1024; // 10 MiB
 
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -37,8 +43,42 @@ public class OkHttp {
         mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
         mOkHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
-        //mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(Application.context()), CookiePolicy.ACCEPT_ALL));
-        //mOkHttpClient.setCache(new Cache(Application.context().getExternalCacheDir(), cacheSize));
+        mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(TApplication.getContext()), CookiePolicy.ACCEPT_ALL));
+        /**
+         * 当你的应用在被用户卸载后，SDCard/Android/data/你的应用的包名/ 这个目录下的所有文件都会被删除，不会留下垃圾信息
+         */
+        mOkHttpClient.setCache(new Cache(TApplication.getContext().getExternalCacheDir(), cacheSize));
+    }
+
+    /**
+     * 取消请求
+     *
+     * @param no
+     */
+    public static void cancleMainNetWork(String[] no) {
+        String[] ccs = new String[]{"FirstFragment", "SecondFragment", "ThirdFragment", "doctor_type", "doctor_right", "active_message", "active_contact"};
+
+        for (int i = 0; i < ccs.length; i++) {
+            for (int j = 0; j < no.length; j++) {
+                if (!ccs[i].equals(no[j]))
+                    mOkHttpClient.cancel(ccs[i]);
+            }
+        }
+    }
+    /**
+     * 取消请求
+     *
+     * @param no
+     */
+    public static void cancleInforMationNetWork(String[] no) {
+        String[] ccs = new String[]{"FoodDrinkFragment", "MomBabyFragment", "FamilyHomeFragment", "CosmticSkinFragment"};
+
+        for (int i = 0; i < ccs.length; i++) {
+            for (int j = 0; j < no.length; j++) {
+                if (!ccs[i].equals(no[j]))
+                    mOkHttpClient.cancel(ccs[i]);
+            }
+        }
     }
 
     /**

@@ -21,6 +21,23 @@
     <style name="dialog_waiting" parent="android:Theme.Holo.Dialog">
         <item name="android:windowBackground">@drawable/dialog_background</item>
     </style>
+
+    <!-- 圆形进度条 -->
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 模糊 -->
+    </style>
+
     <!--dialogWait  style-->
     <!--search activity content RadioButton style-->
     <style name="fragment_tools_case_text">

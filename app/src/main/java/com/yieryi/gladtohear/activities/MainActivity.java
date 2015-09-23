@@ -1,7 +1,7 @@
 package com.yieryi.gladtohear.activities;
-
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,18 +16,18 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.adapter.FunctionAdapter;
 import com.yieryi.gladtohear.bean.FunctionItem;
-import com.yieryi.gladtohear.fragment.main.helpcheck.MacketSelFragment;
 import com.yieryi.gladtohear.fragment.main.main.FirstFragment;
 import com.yieryi.gladtohear.fragment.main.main.SecondFragment;
 import com.yieryi.gladtohear.fragment.main.main.ThirdFragment;
+import com.yieryi.gladtohear.network.OkHttp;
 import com.yieryi.gladtohear.overridge.MyGridLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class MainActivity extends AppCompatActivity implements FunctionAdapter.OnItemClickListener{
     //帮你算按钮
     private List<FunctionItem> functionItems;
@@ -45,10 +45,11 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     private FragmentTransaction transaction;
     private TextView main_new_brand_tv,main_release_brand_tv,main_story_brand_tv;
     private int whichSel;
-
+    private final String TAG=MainActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView( R.layout.activity_main);
         Intent intent = getIntent();
         Log.e("intent",intent.toString());
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
         getDataFunction();
         initView();
         setListeners();
+        Log.e("TAG",TAG);
     }
     private void getDataFunction() {
         functionItems=new ArrayList<>();
@@ -96,7 +98,9 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
         main_local_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this,WelActivity.class);
+                intent.putExtra("setLocation", true);
+                startActivityForResult(intent,200);
             }
         });
         user_center.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
             @Override
             public void onClick(View view) {
                 if (whichSel!=0){
+                    OkHttp.cancleMainNetWork(new String[]{"FirstFragment"});
                     firstFragment=new FirstFragment();
                     setFragmentChose(firstFragment);
                     main_new_brand_tv.setTextColor(getResources().getColor(R.color.color_white));
@@ -128,8 +133,10 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
             @Override
             public void onClick(View view) {
                 if (whichSel!=1) {
+                    OkHttp.cancleMainNetWork(new String[]{"SecondFragment"});
                     secondFragment = new SecondFragment();
                     setFragmentChose(secondFragment);
+
                     main_release_brand_tv.setTextColor(getResources().getColor(R.color.color_white));
                     main_release_brand_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
 
@@ -146,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
             @Override
             public void onClick(View view) {
                 if (whichSel!=2) {
+                    OkHttp.cancleMainNetWork(new String[]{"ThirdFragment"});
                     thirdFragment = new ThirdFragment();
                     setFragmentChose(thirdFragment);
                     main_story_brand_tv.setTextColor(getResources().getColor(R.color.color_white));
@@ -160,6 +168,17 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK&&requestCode==200){
+           if (data!=null){
+               String provience_result = data.getStringExtra("provience");
+               main_local_tv.setText(provience_result);
+           }
+        }
     }
 
     /**
@@ -182,7 +201,6 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
         main_function_recyc.setLayoutManager(gridLayoutManager);
         main_function_recyc.setAdapter(adapter);
 
-
         firstFragment=new FirstFragment();
         manager=getSupportFragmentManager();
         setFragmentChose(firstFragment);
@@ -203,21 +221,30 @@ public class MainActivity extends AppCompatActivity implements FunctionAdapter.O
     public void onClick(View view, int position) {
         switch (position){
             case 0:
+                OkHttp.cancleMainNetWork(new String[]{TAG});
                 alertDialog();
                 break;
             case 1:
+                OkHttp.cancleMainNetWork(new String[]{TAG});
                 Intent intent1=new Intent(MainActivity.this,HelpCheckActivity.class);
                 startActivity(intent1);
                 break;
             case 2:
+                OkHttp.cancleMainNetWork(new String[]{TAG});
+                Toast.makeText(MainActivity.this,"此功能暂时未开放,敬请期待.",Toast.LENGTH_SHORT).show();
                 break;
             case 3:
+                OkHttp.cancleMainNetWork(new String[]{TAG});
                 Intent intent3=new Intent(MainActivity.this,AccumulatedShopActivity.class);
                 startActivity(intent3);
                 break;
             case 4:
+                OkHttp.cancleMainNetWork(new String[]{TAG});
+                Intent intent4=new Intent(MainActivity.this,UserSpaceActivity.class);
+                startActivity(intent4);
                 break;
             case 5:
+                OkHttp.cancleMainNetWork(new String[]{TAG});
                 Intent intent5=new Intent(MainActivity.this,InformationCollectionActivity.class);
                 startActivity(intent5);
                 break;

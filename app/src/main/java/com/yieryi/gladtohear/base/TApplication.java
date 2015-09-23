@@ -15,7 +15,6 @@ import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
@@ -29,7 +28,7 @@ import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.tools.TDevide;
 import com.yieryi.gladtohear.tools.log.Log;
 import com.yieryi.gladtohear.tools.log.LogWrapper;
-import com.yieryi.gladtohear.tools.log.SPCache;
+import com.yieryi.gladtohear.tools.sp.SPCache;
 
 import java.io.File;
 import java.util.Map;
@@ -98,13 +97,13 @@ public class TApplication extends Application{
 
 //            ImageLoaderConfiguration configuration= ImageLoaderConfiguration.createDefault(this);
             ImageLoader.getInstance().init(config);
-
+            initSharePreference();
             initLog();
             initStetho();
-            initSharePreference();
             initPushAgent();
             initUmengAnalytics();
         }
+
     }
     /**
      * 初始化 日志

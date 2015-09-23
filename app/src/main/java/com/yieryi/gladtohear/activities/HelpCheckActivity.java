@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.yieryi.gladtohear.R;
@@ -22,6 +23,7 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
     private FragmentTransaction transaction;
     private TextView help_check_macket_sel_tv,help_check_brand_sel_tv,help_check_catlog_sel_tv;
     private int tagSel;
+    private EditText help_check_search_ed;
 
     @Override
     public int getLayout() {
@@ -43,8 +45,9 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
         macketSelFragment=new MacketSelFragment();
         manager=getSupportFragmentManager();
         transaction = manager.beginTransaction();
-        transaction.add(R.id.help_check_content,macketSelFragment);
+        transaction.add(R.id.help_check_content, macketSelFragment);
         transaction.commit();
+        help_check_search_ed = (EditText) findViewById(R.id.help_check_search_ed);
         help_check_macket_sel_tv=(TextView)findViewById(R.id.help_check_macket_sel_tv);
         help_check_brand_sel_tv=(TextView)findViewById(R.id.help_check_brand_sel_tv);
         help_check_catlog_sel_tv=(TextView)findViewById(R.id.help_check_catlog_sel_tv);
@@ -83,6 +86,7 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
         switch (view.getId()){
             case R.id.help_check_macket_sel_tv:
                 if (tagSel!=0){
+                    help_check_search_ed.setHint("请输入超市名");
                     macketSelFragment=new MacketSelFragment();
                     setFragmentChose(macketSelFragment);
                     help_check_macket_sel_tv.setBackgroundColor(getResources().getColor(R.color.text_little_half_red));
@@ -98,6 +102,7 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
                 break;
             case R.id.help_check_brand_sel_tv:
                 if (tagSel!=1){
+                    help_check_search_ed.setHint("请输入品牌");
                     brandSelFragment=new BrandSelFragment();
                     setFragmentChose(brandSelFragment);
 
@@ -114,6 +119,7 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
                 break;
             case  R.id.help_check_catlog_sel_tv:
                 if (tagSel!=2){
+                    help_check_search_ed.setHint("请输入分类");
                     catlogSelFragment=new CatlogSelFragment();
                     setFragmentChose(catlogSelFragment);
 

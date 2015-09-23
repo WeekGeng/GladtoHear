@@ -1,0 +1,7 @@
+package com.yieryi.gladtohear.biz.basicinformation;
+
+/**
+ * Created by Administrator on 2015/9/18 0018.
+ */
+public class BasicInformationCommitBiz implements IBasicInformationCommitBiz {
+}

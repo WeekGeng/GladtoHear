@@ -47,4 +47,36 @@ public class CatlogConsts {
         public static final String params_class = "getnewslist";
         public static final String params_sign = "1b84c7f0ad96051add15393009b77ae0";
     }
+    /**
+     * user space prize_exchange
+     */
+    public class PrizeExchangeCode{
+        public static final String params_app = "cas";
+        public static final String params_class = "code";
+        public static final String params_sign = "3cb050df47628de032f63fac8d3eb2bf";
+    }
+    /**
+     * 获取帮你查热门
+     */
+    public class HelpCheckHot{
+        public static final String params_app = "shop";
+        public static final String params_class = "hotsearch";
+        public static final String params_sign = "a75786dc420a30e8a018b3882e663c5e";
+    }
+    /**
+     * 获取短信验证码
+     */
+    public class GetMailCode{
+        public static final String params_app = "cas";
+        public static final String params_class = "code";
+        public static final String params_sign = "3cb050df47628de032f63fac8d3eb2bf";
+    }
+    /**
+     * 用户注册
+     */
+    public class Regist{
+        public static final String params_app = "cas";
+        public static final String params_class = "in";
+        public static final String params_sign = "62fa87ace6f05416fed79e020fb9661c";
+    }
 }

@@ -17,11 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    signingConfigs {
-        debug {
-            storeFile file("D:\\android-sdk-windows\\.android\\debug.keystore")
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            storeFile file("D:\\android-sdk-windows\\.android\\debug.keystore")
+//            storePassword "android"
+//            keyPassword "android"
+//        }
+//    }
     android {
         packagingOptions {
             exclude 'META-INF/LICENSE.txt'

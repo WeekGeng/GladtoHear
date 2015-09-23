@@ -56,7 +56,7 @@
         android:background="@drawable/cicle_back_goods_list"
         android:padding="@dimen/five_dip"
         android:singleLine="true"
-        android:hint="请输入超市、品类、品牌搜索"
+        android:hint="请输入超市"
         android:textColor="@color/dimgray"
         android:drawablePadding="@dimen/five_dip"
         android:textSize="@dimen/fourteen_sp"

@@ -1,6 +1,8 @@
 package com.yieryi.gladtohear.fragment.main.main;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +23,7 @@ import com.yieryi.gladtohear.bean.main_brand.Root;
 import com.yieryi.gladtohear.biz.helpcheck.marcket_sel.main_new.NewBrandBiz;
 import com.yieryi.gladtohear.listener.RequestListener;
 import com.yieryi.gladtohear.overridge.MyGridLayoutManager;
+import com.yieryi.gladtohear.view.LoadingDialog;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,29 +32,45 @@ import java.util.List;
  * Created by Administrator on 2015/9/17 0017.
  */
 public class SecondFragment extends Fragment implements RequestListener{
+    private final String TAG=SecondFragment.class.getSimpleName();
     private RecyclerView main_first_fragment_recycle;
     private NewBrandBiz biz;
     private List<News> list;
     private MainFragmentAdapter adapter;
     private MyGridLayoutManager gridLayoutManager;
+    private LoadingDialog dialog;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    dialog.dismiss();
+                    gridLayoutManager = new MyGridLayoutManager(getActivity(), 1);
+                    main_first_fragment_recycle.setLayoutManager(gridLayoutManager);
+                    gridLayoutManager.setSmoothScrollbarEnabled(true);
+                    main_first_fragment_recycle.setAdapter(adapter);
+                    break;
+                case 1:
+                    Toast.makeText(getActivity(),"请求失败",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        biz=new NewBrandBiz();
-        biz.getMacketList("品牌大促", this);
+        if (dialog==null) {
+            dialog = new LoadingDialog(getActivity(), R.style.dialog);
+            biz = new NewBrandBiz();
+            biz.getMacketList("品牌大促", TAG, this);
+            dialog.show();
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.main_first_fragment, container, false);
         main_first_fragment_recycle=(RecyclerView)view.findViewById(R.id.main_first_fragment_recycle);
-        gridLayoutManager=new MyGridLayoutManager(getActivity(),1);
-        gridLayoutManager.setOrientation(MyGridLayoutManager.VERTICAL);
-        gridLayoutManager.setSmoothScrollbarEnabled(true);
-        main_first_fragment_recycle.setLayoutManager(gridLayoutManager);
-        while(adapter==null){
-
-        }
-        main_first_fragment_recycle.setAdapter(adapter);
         return view;
     }
 
@@ -67,14 +86,9 @@ public class SecondFragment extends Fragment implements RequestListener{
                     list = root.getData().getNews();
                     Log.e("size",list.size()+"");
                     adapter=new MainFragmentAdapter(list);
-                    adapter.notifyDataSetChanged();
+                    handler.sendEmptyMessage(0);
                 } else {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((HelpCheckActivity) getActivity()).showToast("请求失败");
-                        }
-                    });
+                    handler.sendEmptyMessage(1);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,11 +98,6 @@ public class SecondFragment extends Fragment implements RequestListener{
 
     @Override
     public void onFailue(Request request, IOException e) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getActivity(), "请检查网络情况", Toast.LENGTH_SHORT).show();
-            }
-        });
+
     }
 }

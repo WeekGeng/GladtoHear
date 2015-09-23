@@ -36,12 +36,12 @@ public class NewBrandBiz implements INewBrandBiz {
             }
         });
     }
-    public void getMacketList(String zixun_category, final RequestListener listener) {
+    public void getMacketList(String zixun_category,String tag,final RequestListener listener) {
         paramas.put(BaseConsts.APP, CatlogConsts.Brand.params_app);
         paramas.put(BaseConsts.CLASS, CatlogConsts.Brand.params_class);
         paramas.put(BaseConsts.SIGN, CatlogConsts.Brand.params_sign);
         paramas.put("zixun_category",zixun_category);
-        OkHttp.asyncPost(BaseConsts.BASE_URL, paramas, new Callback() {
+        OkHttp.asyncPost(BaseConsts.BASE_URL, paramas,tag, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
                 listener.onFailue(request, e);

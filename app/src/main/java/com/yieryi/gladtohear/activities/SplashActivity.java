@@ -1,17 +1,11 @@
 package com.yieryi.gladtohear.activities;
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
-
 import com.umeng.message.IUmengRegisterCallback;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.base.BaseActivity;
-import com.yieryi.gladtohear.base.TApplication;
 import com.yieryi.gladtohear.constans.BaseConsts;
-import com.yieryi.gladtohear.tools.log.Log;
-import com.yieryi.gladtohear.tools.log.SPCache;
-
+import com.yieryi.gladtohear.tools.sp.SPCache;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -40,39 +34,27 @@ public class SplashActivity extends BaseActivity {
     private IUmengRegisterCallback mRegist=new IUmengRegisterCallback() {
         @Override
         public void onRegistered(String s) {
-            Log.e("mRegisterCallback", "token:" + mPushAgent.getRegistrationId());
+
         }
     };
     private void initTask() {
         final boolean isFirstInto= SPCache.getBoolean(
-                BaseConsts.SharePreference.IS_FIRST_INTO,true);
+                BaseConsts.SharePreference.IS_FIRST_INTO, true);
         Timer timer=new Timer();
         TimerTask task=new TimerTask() {
             @Override
             public void run() {
                 if (isFirstInto) {
-                    startActivity(SplashActivity.this, WelActivity.class);
+                    startActivity(SplashActivity.this, GuideActivity.class);
                     finish();
                 }else {
-                    TApplication.token=SPCache.getString(BaseConsts.SharePreference.USER_TOKEN,"");
-                    if (TextUtils.isEmpty(TApplication.token)){
-                        startActivity(SplashActivity.this, MainActivity.class);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                showToast("跳转到了guideActivity");
-                            }
-                        });
-                    }else{
-                        startActivity(SplashActivity.this, MainActivity.class);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                showToast("跳转到了MainActivity");
-                            }
-                        });
+                    String provience = SPCache.getString("provience","");
+                    if (provience == null || "".equals(provience)) {
+                        startActivity(SplashActivity.this, WelActivity.class);
+                        finish();
+                    } else {
+                        startActivity(SplashActivity.this, MainActivity.class, "provience", provience);
                     }
-                    finish();
                 }
             }
         };

@@ -3,6 +3,7 @@ package com.yieryi.gladtohear.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
@@ -46,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastCon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(getLayout());
         initParameters();
         initExit();

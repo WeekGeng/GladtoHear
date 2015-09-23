@@ -27,10 +27,14 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.base.BaseActivity;
+import com.yieryi.gladtohear.bean.login.Root;
+import com.yieryi.gladtohear.biz.login.LoginBiz;
 import com.yieryi.gladtohear.constans.BaseConsts;
 import com.yieryi.gladtohear.constans.LoginConsts;
+import com.yieryi.gladtohear.listener.RequestListener;
 import com.yieryi.gladtohear.network.OkHttp;
 import com.yieryi.gladtohear.tools.MD5Utils;
+import com.yieryi.gladtohear.tools.sp.SPCache;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,15 +47,13 @@ import java.util.regex.Pattern;
 
 import cn.jpush.android.api.JPushInterface;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener,RequestListener{
     //输入框
     private EditText login_ed_phone,login_ed_pass;
     //登录 注册 忘记密码
     private TextView login_tv_login,login_tv_forget_pass,login_tv_regist;
     // 第三方登录 qq,微信,新浪
     private TextView login_tv_qq,login_tv_weixin,login_tv_sina;
-
-    private Map<String,String> paramas=new HashMap<>();
 
     String phone_number,password;
     private Toolbar toolbar;
@@ -127,45 +129,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.login_tv_login:
                 switch (foxMessage()){
                     case 0:
-                        paramas.put(BaseConsts.APP, LoginConsts.Account.APP_ADDRESS);
-                        paramas.put(BaseConsts.CLASS, LoginConsts.Account.Login.params_class);
-                        paramas.put(BaseConsts.username, phone_number);
-                        paramas.put(BaseConsts.password, password);
-                        paramas.put("device_no", "android");
-                        String sign = "";
-                        if (paramas.size() != 0) {
-                            sign = MD5Utils.MD5(paramas.get(BaseConsts.APP) + paramas.get(BaseConsts.CLASS) + BaseConsts.APP_KEY);
-                        }
-                        paramas.put(BaseConsts.SIGN, sign);
-                        OkHttp.asyncPost(BaseConsts.BASE_URL, paramas, new Callback() {
-                            @Override
-                            public void onFailure(Request request, IOException e) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(LoginActivity.this,"服务器异常",Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                            @Override
-                            public void onResponse(final Response response) throws IOException {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Gson gson=new Gson();
-                                        if (response.isSuccessful()){
-                                            try {
-                                                String state=response.body().string();
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                            showToast("登录成功");
-                                            startActivity(LoginActivity.this,MainActivity.class);
-                                        }
-                                    }
-                                });
-                            }
-                        });
+                        LoginBiz biz=new LoginBiz();
+                        biz.login(phone_number,password,JPushInterface.getRegistrationID(this),this);
                         break;
                     case 1:
                         Toast.makeText(LoginActivity.this,"请检查手机号格式。",Toast.LENGTH_SHORT).show();
@@ -191,7 +156,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
                 break;
             case R.id.login_tv_regist:
-
+                startActivity(LoginActivity.this,RegistActivity.class);
                 break;
             case R.id.login_tv_qq:
                 mTencent.login(this, "all",listener);
@@ -204,28 +169,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
     }
-//    @Override
-//    public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-//        switch (view.getId()){
-//            case R.id.login_ed_phone:
-//                if (keyCode==keyEvent.KEYCODE_ENTER){
-//                    login_ed_pass.requestFocus();
-//                }
-//                break;
-//            case R.id.login_ed_pass:
-//                if (keyCode==keyEvent.KEYCODE_ENTER){
-//                    login_tv_login.requestFocus();
-//                }
-//                break;
-//        }
-//        return true;
-//    }
+    @Override
+    public void onResponse(Response response) {
+         if (response.isSuccessful()) {
+             Gson gson = new Gson();
+             try {
+                 String json=response.body().string();
+                 Root root = gson.fromJson(json, Root.class);
+                 if (root.getStatus()==OkHttp.NET_STATE) {
+                     startActivity(LoginActivity.this, MainActivity.class);
+                 }
+             } catch (IOException e) {
+                 e.printStackTrace();
+             }
+         }
+    }
 
+    @Override
+    public void onFailue(Request request, IOException e) {
+        showToast("网络链接异常");
+    }
     /**
      * 登录监听接口
      */
     class MyIUListener implements IUiListener {
-
         JSONObject json;
         @Override
         public void onComplete(Object o) {

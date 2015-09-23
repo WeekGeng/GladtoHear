@@ -5,10 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.yieryi.gladtohear.R;
-import com.yieryi.gladtohear.listener.OnRecycItemClickListener;
-
 import java.util.List;
 
 /**
@@ -16,21 +13,26 @@ import java.util.List;
  */
 public class CatlogListAdapter extends RecyclerView.Adapter<CatlogListAdapter.MyViewHolder>{
     private List<String> list;
-    private OnRecycItemClickListener listener;
-    public CatlogListAdapter(List<String> list,OnRecycItemClickListener listener) {
+    private OnItemClickListener listener;
+    public CatlogListAdapter(List<String> list) {
         this.list = list;
-        this.listener=listener;
+//        this.listener=listener;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.catlog_sel_item,parent,false);
         MyViewHolder holder=new MyViewHolder(view);
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                listener.onClick(view);
+//            }
+//        });
         return holder;
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.tv.setText(list.get(position));
-        listener.onItemClick(holder.tv,position);
     }
     @Override
     public int getItemCount() {
@@ -42,5 +44,8 @@ public class CatlogListAdapter extends RecyclerView.Adapter<CatlogListAdapter.My
             super(itemView);
             tv=(TextView)itemView.findViewById(R.id.calog_sel_item_tv);
         }
+    }
+    public interface OnItemClickListener{
+        void onClick(View view);
     }
 }
