@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -22,11 +21,12 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.activities.HelpCheckActivity;
+import com.yieryi.gladtohear.activities.MarcketSelDetailActivity;
 import com.yieryi.gladtohear.adapter.HelpCheckAdapter;
 import com.yieryi.gladtohear.bean.market_address.Description;
 import com.yieryi.gladtohear.bean.market_address.Root;
 import com.yieryi.gladtohear.biz.helpcheck.marcket_sel.MacketSelBiz;
-import com.yieryi.gladtohear.listener.OnRecycItemClickListener;
+import com.yieryi.gladtohear.listener.OnMarcketSelCallback;
 import com.yieryi.gladtohear.listener.RequestListener;
 import com.yieryi.gladtohear.view.LoadingDialog;
 
@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * 超市选择
  */
-public class MacketSelFragment extends Fragment implements RequestListener,HelpCheckAdapter.OnItemClickListener{
+public class MacketSelFragment extends Fragment implements RequestListener,OnMarcketSelCallback{
         private final String TAG=MacketSelFragment.class.getSimpleName();
         private RecyclerView marcket_sel_fragment_recycle;
         private HelpCheckAdapter adapter;
@@ -65,7 +65,7 @@ public class MacketSelFragment extends Fragment implements RequestListener,HelpC
                 if (dialog==null) {
                         dialog = new LoadingDialog(getActivity(), R.style.dialog);
                         biz = new MacketSelBiz();
-                        biz.getMacketList(0, TAG,this);
+                        biz.getMacketList(0,TAG,this);
                         dialog.show();
                 }
         }
@@ -393,9 +393,8 @@ public class MacketSelFragment extends Fragment implements RequestListener,HelpC
         @Override
         public void onFailue(Request request, IOException e) {
         }
-
         @Override
-        public void onClick(View view) {
-
+        public void marcketSelCallBack(String keyword,String name) {
+                ((HelpCheckActivity)getActivity()).startActivity(getActivity(), MarcketSelDetailActivity.class,new String[]{"keyword","shop_name"},new String[]{keyword,name});
         }
 }

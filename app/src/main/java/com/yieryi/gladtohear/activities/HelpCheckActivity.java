@@ -93,10 +93,10 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
                     help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.color_white));
 
                     help_check_brand_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
-                    help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.theme_color));
 
                     help_check_catlog_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
-                    help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.theme_color));
                     tagSel=0;
                 }
                 break;
@@ -110,10 +110,10 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
                     help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.color_white));
 
                     help_check_macket_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
-                    help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.theme_color));
 
                     help_check_catlog_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
-                    help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.theme_color));
                     tagSel=1;
                 }
                 break;
@@ -127,10 +127,10 @@ public class HelpCheckActivity extends BaseActivity implements OnRecycItemClickL
                     help_check_catlog_sel_tv.setTextColor(getResources().getColor(R.color.color_white));
 
                     help_check_macket_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
-                    help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    help_check_macket_sel_tv.setTextColor(getResources().getColor(R.color.theme_color));
 
                     help_check_brand_sel_tv.setBackgroundColor(getResources().getColor(R.color.color_white));
-                    help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.color_black));
+                    help_check_brand_sel_tv.setTextColor(getResources().getColor(R.color.theme_color));
                     tagSel=2;
                 }
                 break;

@@ -5,7 +5,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/guide_one"
         android:scaleType="fitXY"
+        android:src="@mipmap/guide_two"
         />
 </LinearLayout>

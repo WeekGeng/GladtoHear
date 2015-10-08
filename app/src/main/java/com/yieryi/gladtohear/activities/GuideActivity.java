@@ -8,7 +8,7 @@ import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.adapter.GuideFragmentAdapter;
 import com.yieryi.gladtohear.base.BaseActivity;
 import com.yieryi.gladtohear.fragment.main.guide.FragmentGuideOne;
-import com.yieryi.gladtohear.fragment.main.guide.FragmentGuideThree;
+import com.yieryi.gladtohear.fragment.main.guide.FragmentGuideFour;
 import com.yieryi.gladtohear.fragment.main.guide.FragmentGuideTwo;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 public class GuideActivity extends BaseActivity {
     private final String  TAG=GuideActivity.class.getSimpleName();
     private List<Fragment> list=new ArrayList<>();
-    private Fragment guideOne,guideTwo,guideThree;
+    private Fragment guideOne,guideTwo,guideThree,guide_four;
     private ViewPager guide_vp;
     private GuideFragmentAdapter adapter;
     @Override
@@ -36,11 +36,13 @@ public class GuideActivity extends BaseActivity {
     }
 
     private void initData() {
-        guideThree=new FragmentGuideThree();
+        guideThree=new FragmentGuideFour();
         guideOne=new FragmentGuideOne();
         guideTwo=new FragmentGuideTwo();
+        guide_four=new FragmentGuideFour();
         list.add(guideOne);
         list.add(guideTwo);
+        list.add(guide_four);
         list.add(guideThree);
     }
 

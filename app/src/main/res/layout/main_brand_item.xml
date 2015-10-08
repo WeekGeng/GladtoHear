@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v7.widget.CardView
     android:layout_width="match_parent"
-    android:background="@drawable/cicle_back_catlog_sel"
-    android:paddingBottom="@dimen/two_dip"
-    android:paddingTop="@dimen/two_dip"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/two_dip"
+    android:layout_margin="@dimen/two_dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:scaleType="fitXY"
         android:id="@+id/main_brand_iv"
         android:src="@mipmap/ic_launcher"
         />
-</LinearLayout>
+</android.support.v7.widget.CardView>

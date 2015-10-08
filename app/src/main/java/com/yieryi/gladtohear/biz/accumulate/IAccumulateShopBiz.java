@@ -16,5 +16,5 @@ public interface IAccumulateShopBiz {
      * @param contion 排序  desc降序 asc升序
      * @return
      */
-    void getProductsList(int category,int contion,String sort,RequestListener listener);
+    void getProductsList(int category,int contion,String sort,String tag,RequestListener listener);
 }

@@ -41,6 +41,7 @@
     <color name="txt_hint_color">#D3D3D3</color>
     <color name="gold">#FFD700</color>
     <color name="text_half_black_color">#a000</color>
+    <color name="text_title_black_color">#323232</color>
     <color name="text_little_black_color">#5000</color>
     <color name="text_black_color">#000</color>
     <color name="text_half_red">#aa00</color>
@@ -48,6 +49,7 @@
     <color name="transparent">#2000</color>
     <!--红色 -->
     <color name="theme_color">#ff794c</color>
+    <color name="teal_500">#009688</color>
     <!--灰色 -->
 
 </resources>

@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.bean.main_brand.News;
+import com.yieryi.gladtohear.listener.AccumulateShopItemClickListener;
 
 import java.util.List;
 
@@ -21,9 +22,11 @@ import java.util.List;
  * Created by Administrator on 2015/8/27.
  */
 public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapter.MyViewHolder> {
+    private AccumulateShopItemClickListener listener;
     private List<News> list;
-    public MainFragmentAdapter(List<News> list) {
+    public MainFragmentAdapter(List<News> list,AccumulateShopItemClickListener listener) {
         this.list=list;
+        this.listener = listener;
         Log.e("main_size",list.size()+"");
     }
 
@@ -35,7 +38,7 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
     }
 
     @Override
-    public void onBindViewHolder(final MainFragmentAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MainFragmentAdapter.MyViewHolder holder, final int position) {
         ImageLoader.getInstance().displayImage(list.get(position).getImage(), holder.imageView, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String s, View view) {
@@ -57,6 +60,12 @@ public class MainFragmentAdapter extends RecyclerView.Adapter<MainFragmentAdapte
             @Override
             public void onLoadingCancelled(String s, View view) {
                 Toast.makeText(view.getContext(),s,Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(null,list.get(position).getContent_id());
             }
         });
     }

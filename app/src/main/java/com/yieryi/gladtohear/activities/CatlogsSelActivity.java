@@ -23,7 +23,7 @@ import com.yieryi.gladtohear.base.BaseActivity;
 import com.yieryi.gladtohear.overridge.MyGridLayoutManager;
 import java.util.ArrayList;
 import java.util.List;
-public class CatlogsSelActivity extends BaseActivity implements GoodsListAdapter.OnItemClickListener{
+public class CatlogsSelActivity extends BaseActivity implements GoodsListAdapter.OnItemClickListener,CatlogListAdapter.OnItemClickListener{
     private List<GroupItem> groupItemList;
     private GroupItem groupItem;
     private ChildItem childItem;
@@ -69,10 +69,10 @@ public class CatlogsSelActivity extends BaseActivity implements GoodsListAdapter
         list.add("电动车");
         list.add("洗护用品");
         list.add("清洁用品");
-        CatlogListAdapter adapter=new CatlogListAdapter(list);
+//        CatlogListAdapter adapter=new CatlogListAdapter(list,CatlogsSelActivity.this);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         catlog_sel_recycle.setLayoutManager(manager);
-        catlog_sel_recycle.setAdapter(adapter);
+//        catlog_sel_recycle.setAdapter(adapter);
     }
 
     private void initData() {
@@ -171,6 +171,7 @@ public class CatlogsSelActivity extends BaseActivity implements GoodsListAdapter
         catlog_sel_buy_count_tv=(TextView)findViewById(R.id.catlog_sel_buy_count_tv);
         catlog_sel_recycle=(RecyclerView)findViewById(R.id.catlog_sel_recycle);
         catlog_sel_sc_liner=(LinearLayout)findViewById(R.id.catlog_sel_sc_liner);
+
         catlog_sel_food_drink_tv=(TextView)findViewById(R.id.catlog_sel_food_drink_tv);
         catlog_sel_mom_baby_tv=(TextView)findViewById(R.id.catlog_sel_mom_baby_tv);
         catlog_sel_family_home_tv=(TextView)findViewById(R.id.catlog_sel_family_home_tv);
@@ -387,5 +388,10 @@ public class CatlogsSelActivity extends BaseActivity implements GoodsListAdapter
         }else {
             badgeView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onClick(int position) {
+
     }
 }

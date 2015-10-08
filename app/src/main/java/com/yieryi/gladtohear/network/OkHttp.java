@@ -80,6 +80,21 @@ public class OkHttp {
             }
         }
     }
+    /**
+     * 取消请求
+     *
+     * @param no
+     */
+    public static void cancleAccumulateNetWork(String[] no) {
+        String[] ccs = new String[]{"BeautifulPresentFragment", "DataAddFragment", "ScoreSortFragment"};
+
+        for (int i = 0; i < ccs.length; i++) {
+            for (int j = 0; j < no.length; j++) {
+                if (!ccs[i].equals(no[j]))
+                    mOkHttpClient.cancel(ccs[i]);
+            }
+        }
+    }
 
     /**
      * 不使用异步线程。
@@ -157,6 +172,24 @@ public class OkHttp {
                 .build();
         enqueue(request, callback);
     }
+//    // post without file
+//    public static void asyncPost(String url, Map<String, Object> body, Callback callback) {
+//
+//
+//        FormEncodingBuilder formEncodingBuilder = new FormEncodingBuilder();
+//        for (String key : body.keySet()) {
+//            if (TextUtils.isEmpty((String)body.get(key))) {
+//                return;
+//            }
+//            formEncodingBuilder.add(key, body.get(key));
+//        }
+//        RequestBody formBody = formEncodingBuilder.build();
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .post(formBody)
+//                .build();
+//        enqueue(request, callback);
+//    }
 
     // post without file with tag
     public static void asyncPost(String url, Map<String, String> body, String tag, Callback callback) {

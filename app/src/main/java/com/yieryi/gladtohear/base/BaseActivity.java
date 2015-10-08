@@ -1,9 +1,12 @@
 package com.yieryi.gladtohear.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBar;
@@ -53,6 +56,22 @@ public abstract class BaseActivity extends AppCompatActivity implements ToastCon
         initExit();
         init(savedInstanceState);
         initToolBar();
+    }
+    /**
+     * 检查网络链接状态
+     * @param context
+     * @return
+     */
+    public boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
+            }
+        }
+        return false;
     }
     public ActionBar getCustomBar() {
         return actionBar != null ? actionBar : null;

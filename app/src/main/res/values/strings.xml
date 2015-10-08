@@ -102,7 +102,9 @@
     <string name="title_activity_basic_information">BasicInformationActivity</string>
     <string name="title_activity_help_check_goods_detail">HelpCheckGoodsDetailActivity</string>
     <string name="title_activity_regist">RegistActivity</string>
-
-
+    <string name="title_activity_list_record_detail">ListRecordDetailActivity</string>
+    <string name="drawopen">打开</string>
+    <string name="drawclose">关闭</string>
+    <string name="title_activity_commodity">CommodityActivity</string>
 
 </resources>

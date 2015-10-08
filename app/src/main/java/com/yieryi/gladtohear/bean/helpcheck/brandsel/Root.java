@@ -1,8 +1,5 @@
 package com.yieryi.gladtohear.bean.helpcheck.brandsel;
 
-/**
- * Created by Administrator on 2015/9/21 0021.
- */
 public class Root {
     private int status;
 

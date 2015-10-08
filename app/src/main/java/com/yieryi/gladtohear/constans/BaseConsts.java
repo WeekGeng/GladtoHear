@@ -1,12 +1,21 @@
 package com.yieryi.gladtohear.constans;
 
+import com.yieryi.gladtohear.bean.helpcheck.shopcart.ShopRoot;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Administrator on 2015/9/2.
  */
 public class BaseConsts {
-    private BaseConsts(){}
+    private BaseConsts() {
+    }
+
     //url
-    public static final String BASE_URL="http://admin.joyone2one.com//interface";
+    public static final String BASE_URL = "http://admin.joyone2one.com//interface";
+    //image_url
+    public static final String BASE_IMAGE_URL = "http://admin.joyone2one.com/upload";
     /**
      * MD5加密的秘钥(sign)
      */
@@ -35,15 +44,22 @@ public class BaseConsts {
         private SharePreference() {
 
         }
+
         public static final String SCREEN_WIDTH = "screen_width";
         public static final String SCREEN_HEIGHT = "screen_height";
         public static final String IS_FIRST_INTO = "is_first_into";
         public static final String USER_TOKEN = "user_token";
-        public static final String USER_AUTHORITY = "user_authority";
-        public static final String USER_EREDAR = "user_eredar";
+        public static final String USER_ID = "user_id";
+        public static final String USER_NAME = "user_name";
+        public static final String USER_SCORE = "user_score";
+        public static final String USER_LITTLE_IMAGE = "user_little_image";
+        public static final String NICK_NAME = "nick_name";
         public static final String USER_USERSTATUS = "user_userstatus";
 
     }
+
     //程序退出广播的action
     public static final String INTENT_ACTION_EXIT_APP = "com.yieryi.gladtohear.broadcast.exit";
+    //resultcode
+
 }

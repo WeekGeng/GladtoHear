@@ -1,36 +1,21 @@
 package com.yieryi.gladtohear.activities;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.google.gson.Gson;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+
 import com.yieryi.gladtohear.R;
-import com.yieryi.gladtohear.adapter.InformationCollctionAdapter;
 import com.yieryi.gladtohear.base.BaseActivity;
-import com.yieryi.gladtohear.bean.informationcollaction.Description;
-import com.yieryi.gladtohear.bean.informationcollaction.Root;
-import com.yieryi.gladtohear.constans.BaseConsts;
-import com.yieryi.gladtohear.constans.CatlogConsts;
 import com.yieryi.gladtohear.fragment.main.informationcollection.CosmeticSkinFragment;
 import com.yieryi.gladtohear.fragment.main.informationcollection.FamilyHomeFragment;
 import com.yieryi.gladtohear.fragment.main.informationcollection.FoodDrinkFragment;
 import com.yieryi.gladtohear.fragment.main.informationcollection.MomBabyFragment;
-import com.yieryi.gladtohear.fragment.main.main.FirstFragment;
 import com.yieryi.gladtohear.network.OkHttp;
 import com.yieryi.gladtohear.view.SwipeRefreshView;
-import java.io.IOException;
-import java.util.List;
 
 public class InformationCollectionActivity extends BaseActivity implements View.OnClickListener{
     private SwipeRefreshView swipeRefreshView;
@@ -78,54 +63,9 @@ public class InformationCollectionActivity extends BaseActivity implements View.
                 //swipeRefreshView.setRefreshing(true);
             }
         }, 100);
-        swipeRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshView.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        switch (index){
-                            case 0:
-                                foodDrink=new FoodDrinkFragment();
-                                setFragmentChose(foodDrink);
-                                swipeRefreshView.setRefreshing(false);
-                                break;
-                            case 1:
-                                momBaby=new MomBabyFragment();
-                                setFragmentChose(momBaby);
-                                swipeRefreshView.setRefreshing(false);
-                                break;
-                            case 2:
-                                familyHome=new FamilyHomeFragment();
-                                setFragmentChose(familyHome);
-                                swipeRefreshView.setRefreshing(false);
-                                break;
-                            case 3:
-                                cosmeticSkin=new CosmeticSkinFragment();
-                                setFragmentChose(cosmeticSkin);
-                                swipeRefreshView.setRefreshing(false);
-                                break;
-                        }
-                    }
-                }, 500);
-            }
-        });
-    }
+        
 
-    /**
-     * 根据城市id和品牌进行筛选
-     */
-    private void attemptAttentionList(String city_id,String category_id,int page,int perpage) {
-        paremas.put(BaseConsts.APP, CatlogConsts.GetInfomation.params_app);
-        paremas.put(BaseConsts.CLASS, CatlogConsts.GetInfomation.params_class);
-        paremas.put(BaseConsts.SIGN, CatlogConsts.GetInfomation.params_sign);
-        paremas.put("city_id",city_id);
-        paremas.put("category_id", category_id);
-        paremas.put("page", String.valueOf(page));
-        paremas.put("perpage", String.valueOf(perpage));
     }
-
     @Override
     protected void setToolBar(ActionBar action, boolean isTrue) {
         action.setTitle("资讯汇总");

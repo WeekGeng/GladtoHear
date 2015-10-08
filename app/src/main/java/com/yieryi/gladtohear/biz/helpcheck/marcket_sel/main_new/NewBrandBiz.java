@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * main 品牌新品
+ * maina 品牌新品
  */
 public class NewBrandBiz implements INewBrandBiz {
     private Map<String, String> paramas = new HashMap<>();

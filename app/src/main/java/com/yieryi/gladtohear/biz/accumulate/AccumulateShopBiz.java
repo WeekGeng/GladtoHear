@@ -18,15 +18,14 @@ import java.util.Map;
 public class AccumulateShopBiz implements IAccumulateShopBiz {
     Map<String, String> paramas = new HashMap<>();
     @Override
-    public void getProductsList(int category, int contion, String sort, final RequestListener listener) {
-        final List<Root> list = new ArrayList<>();
+    public void getProductsList(int category, int contion, String sort,String tag, final RequestListener listener) {
         paramas.put(BaseConsts.APP, CatlogConsts.Accumulation.params_app);
         paramas.put(BaseConsts.CLASS, CatlogConsts.Accumulation.params_class);
         paramas.put(BaseConsts.SIGN, CatlogConsts.Accumulation.params_sign);
         paramas.put("category",String.valueOf(category));
         paramas.put("contion",String.valueOf(contion));
         paramas.put("sort",sort);
-        OkHttp.asyncPost(BaseConsts.BASE_URL, paramas, new Callback() {
+        OkHttp.asyncPost(BaseConsts.BASE_URL, paramas,tag, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
                 listener.onFailue(request,e);

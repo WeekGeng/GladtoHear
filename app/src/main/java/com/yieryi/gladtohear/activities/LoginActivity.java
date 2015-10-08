@@ -27,6 +27,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.base.BaseActivity;
+import com.yieryi.gladtohear.base.TApplication;
 import com.yieryi.gladtohear.bean.login.Root;
 import com.yieryi.gladtohear.biz.login.LoginBiz;
 import com.yieryi.gladtohear.constans.BaseConsts;
@@ -58,7 +59,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     String phone_number,password;
     private Toolbar toolbar;
     private final String TAG=LoginActivity.class.getSimpleName();
-
+    private boolean login;
     private Tencent mTencent ;
     private String type;
     private String token,openId,expires;
@@ -71,7 +72,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             handleLogin(openId,username);
         }
     };
-
     @Override
     public int getLayout() {
         return R.layout.activity_login;
@@ -79,6 +79,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void init(Bundle savedInstanceState) {
+        login = getIntent().getBooleanExtra("login", false);
         initView();
         setListeners();
     }
@@ -127,6 +128,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.login_tv_login:
+                if (!isNetworkConnected(this)){
+                    showToast("网络无连接");
+                    return;
+                }
                 switch (foxMessage()){
                     case 0:
                         LoginBiz biz=new LoginBiz();
@@ -177,7 +182,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                  String json=response.body().string();
                  Root root = gson.fromJson(json, Root.class);
                  if (root.getStatus()==OkHttp.NET_STATE) {
-                     startActivity(LoginActivity.this, MainActivity.class);
+                     SPCache.putString(BaseConsts.SharePreference.USER_ID, root.getData().getUserid());
+                     SPCache.putString(BaseConsts.SharePreference.USER_NAME, root.getData().getUsername());
+                     TApplication.user_id =root.getData().getUserid();
+                     TApplication.user_name=root.getData().getUsername();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (login) {
+                                setResult(RESULT_OK);
+                                finish();
+                            }else {
+                                startActivity(LoginActivity.this, MainActivity.class);
+                                finish();
+                            }
+                        }
+                    });
                  }
              } catch (IOException e) {
                  e.printStackTrace();

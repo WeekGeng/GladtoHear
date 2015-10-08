@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.bean.market_address.Description;
+import com.yieryi.gladtohear.listener.OnMarcketSelCallback;
 
 import java.util.List;
 
@@ -21,22 +22,16 @@ import java.util.List;
  */
 public class HelpCheckAdapter extends RecyclerView.Adapter<HelpCheckAdapter.MyViewHolder>{
     private List<Description> list;
-    private OnItemClickListener listener;
-    public HelpCheckAdapter(List<Description> list,OnItemClickListener listener) {
+    private OnMarcketSelCallback calback;
+    public HelpCheckAdapter(List<Description> list,OnMarcketSelCallback calback) {
         this.list=list;
-        this.listener=listener;
+        this.calback=calback;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.helpcheck_recyc_item,parent,false);
         MyViewHolder holder = new MyViewHolder(view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                listener.onClick(view);
-            }
-        });
         return holder;
     }
 
@@ -100,6 +95,12 @@ public class HelpCheckAdapter extends RecyclerView.Adapter<HelpCheckAdapter.MyVi
             }
         });
         holder.tv_name.setText(name);
+        holder.tv_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calback.marcketSelCallBack(list.get(position).getShop_id(),name);
+            }
+        });
     }
 
     @Override

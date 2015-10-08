@@ -40,9 +40,44 @@
             android:text="金额"
             />
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/userspace_list_record_recycle"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/not_login"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/user_space_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_color"
+                android:text="您还没有登陆，请先登陆在查看!"
+                android:gravity="center"
+                />
+            <TextView
+                android:id="@+id/list_record_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_space_title"
+                android:text="登陆"
+                android:paddingTop="@dimen/ten_dip"
+                android:layout_marginTop="@dimen/ten_dip"
+                android:paddingBottom="@dimen/ten_dip"
+                android:background="@color/theme_color"
+                android:layout_alignLeft="@+id/user_space_title"
+                android:layout_alignRight="@+id/user_space_title"
+                android:gravity="center"
+                android:textColor="@color/color_white"
+                android:paddingRight="@dimen/twenty_dip"
+                android:paddingLeft="@dimen/twenty_dip"
+                />
+        </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/userspace_list_record_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 </LinearLayout>

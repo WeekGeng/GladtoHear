@@ -397,6 +397,27 @@
             android:name=".activities.RegistActivity"
             android:label="@string/title_activity_regist" >
         </activity>
+        <activity android:name=".activities.ListRecordDetailActivity" >
+        </activity>
+        <activity android:name=".activities.InformationDetailActivity" >
+        </activity>
+        <activity android:name=".activities.ChatListActivity" >
+        </activity>
+        <activity android:name=".activities.CommentListActivity" >
+        </activity>
+        <activity
+            android:name=".activities.CommodityActivity"
+            android:label="@string/title_activity_commodity"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity android:name=".activities.MarcketSelDetailActivity" >
+        </activity>
+        <activity android:name=".activities.MyAccuntActivity" >
+        </activity>
+        <activity android:name=".activities.SearchListActivity" >
+        </activity>
+        <activity android:name=".activities.ShopDetailListActivity" >
+        </activity>
     </application>
 
 </manifest>

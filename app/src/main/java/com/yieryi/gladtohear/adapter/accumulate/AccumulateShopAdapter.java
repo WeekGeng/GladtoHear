@@ -1,5 +1,6 @@
 package com.yieryi.gladtohear.adapter.accumulate;
 import android.graphics.Bitmap;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,16 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.imageaware.ImageAware;
 import com.nostra13.universalimageloader.core.assist.imageaware.WeakImageViewAware;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.bean.accumulate.Product;
+import com.yieryi.gladtohear.listener.AccumulateShopItemClickListener;
+import com.yieryi.gladtohear.listener.RequestListener;
+
 import java.util.List;
 
 /**
@@ -22,9 +28,10 @@ import java.util.List;
 public class AccumulateShopAdapter extends RecyclerView.Adapter<AccumulateShopAdapter.MyViewHolder>{
     private List<Product> list;
     private DisplayImageOptions options;
-
-    public AccumulateShopAdapter(List<Product> list) {
+    private AccumulateShopItemClickListener listener;
+    public AccumulateShopAdapter(List<Product> list,AccumulateShopItemClickListener listener) {
         this.list=list;
+        this.listener=listener;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,7 +41,7 @@ public class AccumulateShopAdapter extends RecyclerView.Adapter<AccumulateShopAd
     }
 
     @Override
-    public void onBindViewHolder(AccumulateShopAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final AccumulateShopAdapter.MyViewHolder holder, final int position) {
         options = new DisplayImageOptions.Builder()
                 .showImageForEmptyUri(R.mipmap.loading)
                 .showImageOnFail(R.mipmap.loading)
@@ -44,9 +51,37 @@ public class AccumulateShopAdapter extends RecyclerView.Adapter<AccumulateShopAd
                 .bitmapConfig(Bitmap.Config.RGB_565)//设置为RGB565比起默认的ARGB_8888要节省大量的内存
                 .delayBeforeLoading(100)//载入图片前稍做延时可以提高整体滑动的流畅度
                 .build();
-        ImageLoader.getInstance().displayImage(list.get(position).getImage(),holder.imageView,options);
+        String url=list.get(position).getImage();
+        ImageLoader.getInstance().displayImage(url, holder.imageView, options, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String s, View view) {
+                ((ImageView)view).setImageResource(R.mipmap.loading);
+            }
+
+            @Override
+            public void onLoadingFailed(String s, View view, FailReason failReason) {
+                ((ImageView)view).setImageResource(R.mipmap.loading);
+            }
+
+            @Override
+            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+                ((ImageView)view).setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onLoadingCancelled(String s, View view) {
+
+            }
+        });
         holder.tv_titile.setText(list.get(position).getTitle());
         holder.tv_count.setText(list.get(position).getExchange_integral());
+        holder.accumulate_cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClick(null,list.get(position).getContent_id());
+            }
+        });
+
     }
     @Override
     public int getItemCount() {
@@ -57,11 +92,13 @@ public class AccumulateShopAdapter extends RecyclerView.Adapter<AccumulateShopAd
         public ImageView imageView;
         public TextView tv_titile;
         public TextView tv_count;
+        public CardView accumulate_cardview;
         public MyViewHolder(View itemView) {
             super(itemView);
             imageView=(ImageView)itemView.findViewById(R.id.accumulate_item_shopping_iv);
             tv_titile=(TextView)itemView.findViewById(R.id.accumulate_item_shopping_introduce_tv);
             tv_count=(TextView)itemView.findViewById(R.id.accumulate_item_shopping_count_tv);
+            accumulate_cardview = (CardView) itemView.findViewById(R.id.accumulate_cardview);
         }
     }
 }

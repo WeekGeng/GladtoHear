@@ -151,7 +151,10 @@ public class RegistActivity extends BaseActivity implements RequestListener,Regi
                     TApplication.token = roots.getData().getPassword();
                     // 保存SP
                     SPCache.putString(BaseConsts.SharePreference.USER_TOKEN,roots.getData().getPassword());
-                    SPCache.putString(BaseConsts.SharePreference.USER_AUTHORITY,roots.getData().getUsername());
+                    SPCache.putString(BaseConsts.SharePreference.USER_ID, roots.getData().getUserid());
+                    SPCache.putString(BaseConsts.SharePreference.USER_NAME, roots.getData().getUsername());
+                    TApplication.user_id =roots.getData().getUserid();
+                    TApplication.user_name=roots.getData().getUsername();
                     finish();
                 }else{
                     showToast("注册失败，服务器在维护，请稍后尝试。");

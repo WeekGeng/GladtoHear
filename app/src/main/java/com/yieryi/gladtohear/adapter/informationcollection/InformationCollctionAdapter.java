@@ -1,4 +1,4 @@
-package com.yieryi.gladtohear.adapter;
+package com.yieryi.gladtohear.adapter.informationcollection;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -25,12 +25,18 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.yieryi.gladtohear.R;
+import com.yieryi.gladtohear.bean.helpcheck.shopcart.ShopRoot;
+import com.yieryi.gladtohear.bean.marcketseldetail.Lists;
+import com.yieryi.gladtohear.bean.user.User;
 import com.yieryi.gladtohear.tools.TDevide;
 import com.yieryi.gladtohear.tools.log.Log;
 import com.yieryi.gladtohear.tools.log.LogWrapper;
 import com.yieryi.gladtohear.tools.sp.SPCache;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.jpush.android.api.JPushInterface;
@@ -40,12 +46,18 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class TApplication extends Application{
     private static final String TAG=TApplication.class.getSimpleName();
-
     public static TApplication getInstance=null;
+    //购物车
+    public static List<Lists> shop_lists=new ArrayList<>();
+    public static boolean isSel;
     //高德地图定位
     private static String spName="yiErYi_gaoDe_local";
     private static SharedPreferences.Editor edit;
-    public static int u_id;
+    public static String user_id;
+    //昵称
+    public static User user;
+    //用户名
+    public static String user_name;
     public static String token="";
     private PushAgent mPushAgent;
     /**

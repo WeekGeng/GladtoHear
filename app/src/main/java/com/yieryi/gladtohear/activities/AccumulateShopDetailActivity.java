@@ -1,15 +1,68 @@
 package com.yieryi.gladtohear.activities;
-
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
+import android.text.Html;
+import android.text.Spanned;
+import android.util.Log;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.view.WindowManager;
+import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.yieryi.gladtohear.R;
 import com.yieryi.gladtohear.base.BaseActivity;
+import com.yieryi.gladtohear.bean.accumulate.detail.Root;
+import com.yieryi.gladtohear.bean.accumulate.detail.Info;
+import com.yieryi.gladtohear.biz.accumulate.AccumulateDetailBiz;
+import com.yieryi.gladtohear.listener.RequestListener;
+import com.yieryi.gladtohear.network.OkHttp;
+import com.yieryi.gladtohear.view.LoadingDialog;
+import java.io.IOException;
 
-public class AccumulateShopDetailActivity extends BaseActivity {
+public class AccumulateShopDetailActivity extends BaseActivity implements RequestListener{
+    private final String TAG = AccumulateShopDetailActivity.class.getSimpleName();
+    private TextView accumulate_detail_title_tv,accumulate_detail_time_tv,accumulate_detail_accumulate_tv,accumulate_detail_exchange_tv,accumulate_detail_description_content_tv,accumulate_detail_activity_rool_content_tv,accumulate_detail_change_content_tv;
+    private ImageView accumulate_detail_iv;
+    private AccumulateDetailBiz biz;
+    private LoadingDialog dialog;
+    private Info info;
+    private  Spanned sp;
+    private WebView accumulate_detail_content_webview;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    if (dialog!=null){
+                        dialog.dismiss();
+                    }
+                    ImageLoader.getInstance().displayImage(info.getImage_default(), accumulate_detail_iv);
+                    accumulate_detail_title_tv.setText(info.getTitle());
+                    accumulate_detail_time_tv.append(info.getExchange_time());
+                    accumulate_detail_accumulate_tv.setText(info.getExchange_integral());
+                    accumulate_detail_description_content_tv.setText(info.getSummary());
+                    accumulate_detail_activity_rool_content_tv.setText(info.getRule());
+                    accumulate_detail_change_content_tv.setText(info.getExchange_note());
+
+                    accumulate_detail_content_webview.getSettings().setDefaultTextEncodingName("UTF -8");//设置默认为utf-8
+                    accumulate_detail_content_webview.loadData(info.getContentbody(), "text/html;charset=UTF-8", null);//这种写法可以正确解码
+                    break;
+                case 1:
+                    showToast("网络异常");
+                    break;
+            }
+        }
+    };
+
     @Override
     public int getLayout() {
         return R.layout.activity_accumulate_shop_detail;
@@ -17,7 +70,43 @@ public class AccumulateShopDetailActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        String content_id=getIntent().getStringExtra("content_id");
+        if (content_id==null||"".equals(content_id)){
+            showToast("请求出错");
+        }
+        initView();
+        setListener();
+        if (isNetworkConnected(this)){
+            if (dialog==null) {
+                dialog = new LoadingDialog(this,R.style.dialog);
+                biz = new AccumulateDetailBiz();
+                biz.getDetail(content_id, TAG, this);
+                dialog.show();
+            }
+        }else {
+            showToast("网络链接异常");
+        }
+    }
 
+    private void setListener() {
+        accumulate_detail_exchange_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+    }
+
+    private void initView() {
+        accumulate_detail_title_tv=(TextView)findViewById(R.id.accumulate_detail_title_tv);
+        accumulate_detail_time_tv=(TextView)findViewById(R.id.accumulate_detail_time_tv);
+        accumulate_detail_accumulate_tv=(TextView)findViewById(R.id.accumulate_detail_accumulate_tv);
+        accumulate_detail_exchange_tv=(TextView)findViewById(R.id.accumulate_detail_exchange_tv);
+        accumulate_detail_description_content_tv=(TextView)findViewById(R.id.accumulate_detail_description_content_tv);
+        accumulate_detail_activity_rool_content_tv=(TextView)findViewById(R.id.accumulate_detail_activity_rool_content_tv);
+        accumulate_detail_change_content_tv=(TextView)findViewById(R.id.accumulate_detail_change_content_tv);
+        accumulate_detail_iv = (ImageView) findViewById(R.id.accumulate_detail_iv);
+        accumulate_detail_content_webview = (WebView) findViewById(R.id.accumulate_detail_content_webview);
     }
 
     @Override
@@ -29,9 +118,33 @@ public class AccumulateShopDetailActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResponse(Response response) {
+        if (response.isSuccessful()) {
+            Gson gson=new Gson();
+            try {
+                String json = response.body().string();
+                Root root = gson.fromJson(json, Root.class);
+                if (root.getStatus() == OkHttp.NET_STATE) {
+                    info = root.getData().getInfo();
+                    handler.sendEmptyMessage(0);
+                }else {
+                    handler.sendEmptyMessage(1);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onFailue(Request request, IOException e) {
+
     }
 }

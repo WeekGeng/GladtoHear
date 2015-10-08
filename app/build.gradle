@@ -38,13 +38,7 @@ android {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support:support-v4:22.2.1'
-    compile files('libs/badgeview.jar')
-    compile 'com.android.support:cardview-v7:22.2.1'
     compile files('libs/universal-image-loader-1.8.7-snapshot-with-sources.jar')
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile files('libs/MapApiLocation_1.3.3.jar')
     compile files('libs/mta-sdk-1.6.2.jar')
     compile files('libs/open_sdk_r5276.jar')
@@ -54,9 +48,18 @@ dependencies {
     compile files('libs/SocialSDK_WeiXin_2.jar')
     compile files('libs/umeng-update-v2.6.0.1.jar')
     compile files('libs/umeng_social_sdk.jar')
+    compile files('libs/jpush-sdk-release1.8.1.jar')
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:support-v4:22.2.1'
+    compile 'com.android.support:cardview-v7:22.2.1'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.facebook.stetho:stetho-okhttp:1.1.1'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.google.code.gson:gson:2.3.1'
-    compile files('libs/jpush-sdk-release1.8.1.jar')
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
+    compile 'jp.wasabeef:recyclerview-animators:1.2.2'
+    compile 'com.android.support:design:22.2.1'
+    compile files('libs/badgeview.jar')
+    compile files('libs/nineoldandroids-library-2.4.0.jar')
 }

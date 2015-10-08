@@ -40,7 +40,14 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
                     finish();
                     break;
                 case 1:
-
+                    showToast("定位失败");
+                    provience=SPCache.getString("provience","");
+                    if (provience==null||"".equals(provience)){
+                        provience="上海";
+                    }
+                    SPCache.putString("provience", provience);
+                    startActivity(WelActivity.this, MainActivity.class, "provience", provience);
+                    finish();
                     break;
             }
 
@@ -55,20 +62,19 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
     public void init(Bundle savedInstanceState) {
         initView();
         boolean setLocation=getIntent().getBooleanExtra("setLocation", false);
-        if (!setLocation){
-            Timer timer_location = new Timer();
-            TimerTask task_location=new TimerTask() {
-                @Override
-                public void run() {
-                    stopLocation();
-                    showToast("定位失败");
-                    handler.sendEmptyMessage(0);
-                }
-            };
-            if (provience == null || "".equals(provience)) {
-                timer_location.schedule(task_location, 5000);
-            }
-        }
+//        if (!setLocation){
+//            Timer timer_location = new Timer();
+//            TimerTask task_location=new TimerTask() {
+//                @Override
+//                public void run() {
+//                    stopLocation();
+//                    handler.sendEmptyMessage(1);
+//                }
+//            };
+//            if (provience == null || "".equals(provience)) {
+//                timer_location.schedule(task_location, 5000);
+//            }
+//        }
     }
 
     @Override
@@ -123,6 +129,7 @@ public class WelActivity extends BaseActivity implements OnLocalListener{
     public void onSuccess(AMapLocation aMapLocation) {
         provience=aMapLocation.getProvince();
         if (provience==null||"".equals(provience)){
+            stopLocation();
             showToast("请检查网络,或者查看GPS");
             return;
         }

@@ -1,5 +1,21 @@
 <resources>
-
+    <style name="sline">
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="tv_middle16_white_sl" parent="@style/sline">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="right_list_name">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="FabMargin">
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppTheme.Base"></style>
     <!-- Customize your theme here. -->
@@ -52,6 +68,8 @@
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@drawable/txt_black_to_white_selector</item>
     </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <!--search activity content RadioButton style-->
 
 </resources>
